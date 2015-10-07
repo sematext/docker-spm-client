@@ -1,13 +1,18 @@
 # SPM Client 
 
-This Docker Image contains [SPM](https://www.sematext.com/spm) Client. 
+This Docker Image contains [SPM](https://sematext.com/spm) Client. 
 
-SPM Client is an application monitoring agent for the following Applications:
+SPM Client is an Application Monitoring agent for the following Applications:
 
-Solr & SolrCloud, Elasticsearch, Apache Spark, Apache Storm, Apache Kafka, Apache Cassandra, 
-Hbase, Hahoop, Apache2 and Apache Tomacat Webservers, Nginx, Nginx Plus, HAProxy, Redis, Memcached, MySQL & MariaDB, AWS EC2, ELB, EBS, RDS, JVM / Java Applications, ...
+Solr & SolrCloud, Elasticsearch, Apache Spark, Apache Storm, Apache
+Kafka, Apache Cassandra, Akka, HBase, Hadoop, Apache2, Nginx, Nginx
+Plus, Tomcat, HAProxy, Redis, Memcached, MySQL and MariaDB, AWS EC2,
+ELB, EBS, RDS, JVM / Java and Scala Applications, ...
 
-Please note there are separate monitoring agents available for other technologies not covered by this Image e.g. Docker, CoreOS (sematext/spm-agent-docker) and Node.js for Express, Hapi.js, Koa Apps ...
+Please note there are separate monitoring agents available for other
+technologies not covered by this Image e.g. Docker, CoreOS
+(sematext/spm-agent-docker) and Node.js for Express, Hapi.js, Koa Apps
+...
 
 # Installation 
 
@@ -20,10 +25,11 @@ docker run --name spm-client --restart=always -e SPM_CONFIG sematext/spm-client
 
 ```
 
-# Example
+# Examples
+## Running Elasticsearch in Docker containers and monitoring Elasticsearch nodes with SPM
 
-In the following example we see options, for the SPM In-Process monitor to inject a .jar file from SPM Client Volume.
-The ES_JAVA_OPTS string is taken from SPM install instructions - using the SPM Token and naming the JVM (in case you like to run N instances on the same host). 
+In the following example we see options for the SPM In-Process monitor to inject a .jar file from SPM Client Volume.
+The ES_JAVA_OPTS string is taken from SPM install instructions - using the SPM Token and naming the JVM (in case you run multiple application instances on the same host). 
 
 ```
 
