@@ -12,7 +12,7 @@ if [ -n "$SPM_CONFIG" ]; then
 	  bash -c "/opt/spm/bin/spm-client-setup-conf.sh $cfg"
 	  # Check for standalone monitors
 	  case "$cfg" in
-	    *standalone* ) export SPM_STANDALONE="enabled"; echo "Standalone Monitor enabled for: $cfg";;
+	    *standalone* ) export SPM_STANDALONE_MONITOR="enabled"; echo "Standalone Monitor enabled for: $cfg";;
 	  esac
 	done
 fi
