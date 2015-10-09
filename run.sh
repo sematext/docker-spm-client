@@ -5,7 +5,7 @@ IFS_ORIGINAL=$IFS
 SPM_STANDALONE_MONITOR="disabled"
 IFS=";"
 if [ -n "$SPM_CONFIG" ]; then
-	for cfg in $SPM_CFG
+	for cfg in $SPM_CONFIG
 	do
 	  set IFS = $IFS_ORIGINAL	
 	  echo "-" "$cfg"  
