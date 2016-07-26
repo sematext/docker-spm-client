@@ -20,7 +20,7 @@ technologies not covered by this Image e.g. Docker, CoreOS
 # multiple Apps can be configured using ";" as separator
 # SPM_CONFIG="YOUR_SPM_CONFIG_STRINGS"
 # Elasticsearch Example
-export SPM_CONFIG="YOUR_SPM_TOKEN es javagent jvmname:ES1"
+export SPM_CONFIG="YOUR_SPM_TOKEN es javaagent jvmname:ES1"
 docker run --name spm-client --restart=always -e SPM_CONFIG sematext/spm-client
 
 ```
@@ -47,7 +47,7 @@ Any Linux command can be executed to modify the configuration using "docker exec
 
 ```
 # An alternative way to configure Elasticsearch to set  e.g. jvmname 'ES1'
-docker exec -it spm-client /bin/bash /opt/spm/bin/spm-setup-conf.sh YOUR_SPM_TOKEN es javagent jvmname:ES1
+docker exec -it spm-client /bin/bash /opt/spm/bin/spm-setup-conf.sh YOUR_SPM_TOKEN es javaagent jvmname:ES1
 # persist config changes
 docker commit spm-client
 ```
