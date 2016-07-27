@@ -23,6 +23,6 @@ IFS=$IFS_ORIGINAL
 #bash /opt/spm/bin/spm-client-setup-os-conf.sh
 /etc/init.d/spm-monitor restart
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon & 
-tail -F /opt/spm/spm-monitor/logs/*/*.log 
+tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -v INFO
 
 
