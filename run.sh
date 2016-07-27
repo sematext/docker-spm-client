@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Configure SPM 
 #Set the field separator to new line
-echo "$HOSTNAME 127.0.0.1" >> /etc/hosts
 IFS_ORIGINAL=$IFS
 SPM_STANDALONE_MONITOR="disabled"
 IFS=";"
@@ -18,12 +17,12 @@ if [ -n "$SPM_CONFIG" ]; then
 	done
 fi
 
-sed -i s/spm_sender_hostname_alias=/spm_sender_hostname_alias=${HOSTNAME}/g /opt/spm/properties/spm-sender.properties
+sed -i s/spm_sender_hostname_alias=$/spm_sender_hostname_alias=${HOSTNAME}/g /opt/spm/properties/spm-sender.properties
 
 IFS=$IFS_ORIGINAL
-bash /opt/spm/bin/spm-client-setup-os-conf.sh
-/bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon & 
-tail -F /opt/spm/spm-monitor/logs/*/*.log | grep -v INFO
+#bash /opt/spm/bin/spm-client-setup-os-conf.sh
+/etc/init.d/spm-monitor restart
+# /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon & 
+tail -F /opt/spm/spm-monitor/logs/*/*.log 
 
-#/etc/init.d/spm-monitor start
 
