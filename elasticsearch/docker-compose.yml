@@ -1,0 +1,17 @@
+spm-client:
+ image: spmclient
+ container_name: spm-client
+ # share the network with the host to reach ES on localhost:9200
+ hostname: moby
+ net: host
+ environment:
+ # SPM Token from http://apps.sematext.com
+ - SPM_CONFIG=${SPM_TOKEN} es standalone
+
+elasticsearch:
+ image: elasticsearch:latest
+ ports:
+ - "9200:9200"
+ volumes:
+ # set your data directory and other options ...
+ - /tmp/es-data/:/usr/share/elasticsearch/data
