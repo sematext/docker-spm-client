@@ -26,8 +26,6 @@ docker run --name spm-client --restart=always -e SPM_CONFIG sematext/spm-client
 ```
 
 # Examples
-
-# Examples
 - [How to use SPM Client Container with Elasticsearch](http://blog.sematext.com/2015/10/28/docker-elasticsearch-how-to-monitor-the-official-elasticsearch-image-on-docker/)
 - [How use SPM Client Container with Solr](http://blog.sematext.com/2015/12/09/docker-solr-monitoring/)
 - [Monitoring Kafka on Docker Cloud](https://sematext.com/blog/2016/04/19/monitoring-kafka-on-docker-cloud/)
