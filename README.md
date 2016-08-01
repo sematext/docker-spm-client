@@ -26,19 +26,13 @@ docker run --name spm-client --restart=always -e SPM_CONFIG sematext/spm-client
 ```
 
 # Examples
-## Running Elasticsearch in Docker containers and monitoring Elasticsearch nodes with SPM
 
-In the following example we see options for the SPM In-Process monitor to inject a .jar file from SPM Client Volume.
-The ES_JAVA_OPTS string is taken from SPM install instructions - using the SPM Token and naming the JVM (in case you run multiple application instances on the same host). 
+# Examples
+- [How to use SPM Client Container with Elasticsearch](http://blog.sematext.com/2015/10/28/docker-elasticsearch-how-to-monitor-the-official-elasticsearch-image-on-docker/)
+- [How use SPM Client Container with Solr](http://blog.sematext.com/2015/12/09/docker-solr-monitoring/)
+- [Monitoring Kafka on Docker Cloud](https://sematext.com/blog/2016/04/19/monitoring-kafka-on-docker-cloud/)
+- [Gist: Docker Compose Examples for Tomcat in-process and standalone monitoring](https://gist.github.com/megastef/ada049814fdb69ddca5eff296555b99c)
 
-```
-
-docker run -d --name “ES1” -d \
---volumes-from spm-client \
--e ES_JAVA_OPTS="-Dcom.sun.management.jmxremote -javaagent:/opt/spm/spm-monitor/lib/spm-monitor-es.jar=YOUR_SPM_TOKEN::ES1 -Des.node.name=ES1" \
--p 9200:9200 elasticsearch 
-
-```
 
 Parameters:
 - SPM_CONFIG - Multiple App configurations for spm-client-setup-conf.sh separated by ";". 
