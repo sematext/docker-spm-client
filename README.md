@@ -21,7 +21,7 @@ technologies not covered by this Image e.g. Docker, CoreOS
 # SPM_CONFIG="YOUR_SPM_CONFIG_STRINGS"
 # Elasticsearch Example
 export SPM_CONFIG="YOUR_SPM_TOKEN es javaagent jvmname:ES1"
-docker run --name spm-client --restart=always -e SPM_CONFIG sematext/spm-client
+docker run --name spm-client --restart=always -e $SPM_CONFIG sematext/spm-client
 
 ```
 
