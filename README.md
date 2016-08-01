@@ -9,9 +9,9 @@ Kafka, Apache Cassandra, Akka, HBase, Hadoop, Apache2, Nginx, Nginx
 Plus, Tomcat, HAProxy, Redis, Memcached, MySQL and MariaDB, AWS EC2,
 ELB, EBS, RDS, JVM / Java and Scala Applications, ...
 
-Please note there are separate monitoring agents available for other
-technologies not covered by this Image e.g. Docker, CoreOS
-(sematext/spm-agent-docker) and Node.js for Express, Hapi.js, Koa Apps
+Please note: to monitor Docker, CoreOS, RancherOS, etc. themselves use [sematext/sematext-agent-docker](https://github.com/sematext/sematext-agent-docker)
+
+Also, monitoring of Node.js for Express, Hapi.js, Koa Apps, etc. is not included in this image - use [sematext/spm-agent-nodejs](https://github.com/sematext/spm-agent-nodejs) for that.
 ...
 
 # Installation 
