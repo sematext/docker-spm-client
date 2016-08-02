@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 # Configure SPM 
+
+export DOCKER_SOCKET=/var/run/docker.sock
+
+if test -r $DOCKER_SOCKET; then
+	echo "docker_id=$(curl --silent --unix-socket /var/run/docker.sock http:/info | jq '.ID' | sed s/\"//g)" > /opt/spm/.docker
+	echo "docker_host_name=$(curl --silent --unix-socket /var/run/docker.sock http:/info | jq '.Name' | sed s/\"//g)" >> /opt/spm/.docker
+	echo content of /opt/spm/.docker:
+	cat /opt/spm/.docker
+else 
+	echo "Docker Socket $DOCKER_SOCKET is not readable!"
+	echo "Please add -v ${DOCKER_SOCKET}:${DOCKER_SOCKET} to the docker run command"
+	exit -1
+fi
+
+
+
 #Set the field separator to new line
 IFS_ORIGINAL=$IFS
 SPM_STANDALONE_MONITOR="disabled"
