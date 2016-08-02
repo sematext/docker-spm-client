@@ -3,9 +3,11 @@
 
 export DOCKER_SOCKET=/var/run/docker.sock
 if test -r $DOCKER_SOCKET; then
-	socat TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
+	socat TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock & 
+	SOCAT_PID=$!
 	echo "docker_id=$(curl --silent http://localhost:2375/info | jq '.ID' | sed s/\"//g)" > /opt/spm/.docker
 	echo "docker_host_name=$(curl --silent http://localhost:2375/info  | jq '.Name' | sed s/\"//g)" >> /opt/spm/.docker
+	kill -9 $SOCAT_PID
 	chmod 555 /opt/spm/.docker
 	echo content of /opt/spm/.docker:
 	cat /opt/spm/.docker
