@@ -22,10 +22,11 @@ install:
   - docker build -t sematext/spm-client:1.31.100 . 
   
 script: 
+  - export SPM_TOKEN=$SPM_TOKEN
   - docker-compose version 
   - docker version
   - cd examples/tomcat 
   - docker-compose up -d 
-  - sleep 10 
+  - sleep 20 
   - docker-compose logs 
-  - docker ps | grep spm-client-tc
+  - bash -c "docker ps | grep spm-client-tc"
