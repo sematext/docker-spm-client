@@ -1,4 +1,4 @@
-FROM debian:jessie 
+FROM debian:stretch
 RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list && \
     apt-get -qqy update && apt-get install -qqy sudo wget curl cron ntp python openjdk-8-jre-headless jq sysvinit-core sysvinit-utils && \
     apt-get remove --purge --auto-remove systemd -y && \
