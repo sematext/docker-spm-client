@@ -2,10 +2,10 @@
 # Configure SPM 
 
 export DOCKER_SOCKET=/var/run/docker.sock
-
 if test -r $DOCKER_SOCKET; then
 	echo "docker_id=$(curl --silent --unix-socket /var/run/docker.sock http:/info | jq '.ID' | sed s/\"//g)" > /opt/spm/.docker
 	echo "docker_host_name=$(curl --silent --unix-socket /var/run/docker.sock http:/info | jq '.Name' | sed s/\"//g)" >> /opt/spm/.docker
+	chmod 555 /opt/spm/.docker
 	echo content of /opt/spm/.docker:
 	cat /opt/spm/.docker
 else 
