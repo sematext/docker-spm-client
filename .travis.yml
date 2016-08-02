@@ -2,12 +2,14 @@ sudo: required
 services:
   - docker
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y curl 
 install: 
-  - docker build -t sematext/spm-client:1.31.100 . 
   - sudo curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
   - sudo chmod +x /usr/local/bin/docker-compose
+  - docker build -t sematext/spm-client:1.31.100 . 
   
-
 script: 
   - cd examples/tomcat
   - export SPM_TOKEN=TRAVIS-CI-TEST
