@@ -1,21 +1,17 @@
-language: python
-python:
-  - 2.7
+language: go
 
 os:
   - linux
 
-addons:
-  apt:
-    packages:
-      - curl  
 sudo: required
 services:
   - docker
 
 install: 
-  - sudo curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-  - sudo chmod +x /usr/local/bin/docker-compose
+  # - sudo curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+  # - sudo chmod +x /usr/local/bin/docker-compose
+  - docker-compose version 
+  - docker version
   - docker build -t sematext/spm-client:1.31.100 . 
   
 script: 
