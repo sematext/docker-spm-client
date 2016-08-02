@@ -6,6 +6,9 @@ services:
    container_name: spm-client-tc
    # net: host
    hostname: spm-client-tc
+   volumes: 
+    # upcoming release will require access to docker socket, not req. for current 1.31.100
+    - /var/run/docker.sock:/var/run/docker.sock
    environment:
     - SPM_CONFIG=${SPM_TOKEN} tomcat javaagent
     # SPM Token from http://apps.sematext.com
