@@ -8,7 +8,7 @@ RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/s
     apt-get update -qqy && \
     apt-get install --force-yes -qqy spm-client nodejs && \
     apt-get autoremove && apt-get autoclean && \
-    npm i spm-agent-mongodb sematext-agent-httpd sematext-agent-nginx -g && npm i dockerode
+    npm i spm-agent-mongodb sematext-agent-httpd sematext-agent-nginx -g 
 ADD ./run.sh /run.sh
 ADD ./docker-info.js /tmp/di/docker-info.js
 ADD ./package.json  /tmp/di/package.json
