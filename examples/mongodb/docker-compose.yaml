@@ -11,8 +11,8 @@ services:
    environment:
     # token mongodb mongo-url
     - SPM_CONFIG=${SPM_TOKEN} mongodb mongodb://mongodb:27017/admin
-   links: 
-    - mongodb
+   #links: 
+   # - mongodb
 
   mongodb:
    image: mongo:latest
