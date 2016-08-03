@@ -10,14 +10,14 @@ RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/s
     apt-get autoremove && apt-get autoclean && \
     npm i spm-agent-mongodb sematext-agent-httpd sematext-agent-nginx -g && npm i dockerode
 ADD ./run.sh /run.sh
-ADD ./docker-info.js  /tmp/di/docker-info.js
+ADD ./docker-info.js /tmp/di/docker-info.js
 ADD ./package.json  /tmp/di/package.json
 ADD ./netmap.sh /opt/spm/bin/netmap.sh
 RUN chmod +x run.sh && chmod +x /opt/spm/bin/netmap.sh && \
     chmod +x /opt/spm/bin/spm-client-setup-conf.sh && \
     chmod +x /tmp/di/docker-info.js && \
     ln /usr/bin/env /bin/env && \
-    cd /tmp/di/ && npm i  -g && rm -rf /tmp/di
+    npm i /tmp/di/ -g && rm -rf /tmp/di
 ENV PATH ${PATH}:/opt/spm/bin/
 VOLUME /opt/spm
 CMD ["/run.sh"]
