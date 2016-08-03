@@ -5,8 +5,10 @@ function get_docker_info ()
 {
 	export DOCKER_SOCKET=/var/run/docker.sock
 	if test -r $DOCKER_SOCKET; then
+		# nodejs based agents use SPM_REPORTED_HOSTNAME for the hostname field
+		export SPM_REPORTED_HOSTNAME=$(docker-info Name)
 		echo "docker_id=$(echo $(docker-info ID))" > /opt/spm/.docker
-		echo "docker_hostname=$(echo $(docker-info Name))" >> /opt/spm/.docker
+		echo "docker_hostname=${SPM_REPORTED_HOSTNAME}" >> /opt/spm/.docker
 		chmod 555 /opt/spm/.docker
 		echo content of /opt/spm/.docker:
 		cat /opt/spm/.docker
@@ -14,7 +16,7 @@ function get_docker_info ()
 		echo "Docker Socket $DOCKER_SOCKET is not readable!"
 		echo "Please add -v ${DOCKER_SOCKET}:${DOCKER_SOCKET} to the docker run command"
 		echo "This will let SPM agents collect the docker hostname to tag metrics."
-		#exit -1
+		exit -1
 	fi
 }
 
@@ -91,6 +93,8 @@ function spm_client_setups ()
 }
 
 get_docker_info
+#  set hostname alias to actual docker host, until new spm-client is released
+sed -i s/spm_sender_hostname_alias=$/spm_sender_hostname_alias=${SPM_REPORTED_HOSTNAME}/g /opt/spm/properties/spm-sender.properties
 spm_client_setups 
 
 /etc/init.d/spm-monitor restart
