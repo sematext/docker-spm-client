@@ -17,7 +17,7 @@ RUN chmod +x run.sh && chmod +x /opt/spm/bin/netmap.sh && \
     chmod +x /opt/spm/bin/spm-client-setup-conf.sh && \
     chmod +x /tmp/di/docker-info.js && \
     ln /usr/bin/env /bin/env && \
-    npm i /tmp/di/ -g && rm -rf /tmp/di
+    npm i /tmp/di/ -g 
 ENV PATH ${PATH}:/opt/spm/bin/
 VOLUME /opt/spm
 CMD ["/run.sh"]
