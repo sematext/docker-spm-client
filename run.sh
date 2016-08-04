@@ -29,7 +29,7 @@ function setup_httpd_agent ()
 	export spmagent_httpd__url=${array[2]}
 	sematext-agent-httpd ${array[0]} ${array[2]}  > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log & 
 	unset SPM_TOKEN
-	unset spmagent_nginx__url
+	unset spmagent_httpd__url
 	IFS=$IFS_ORIGINAL
 }
 
@@ -54,6 +54,8 @@ function setup_mongodb_agent()
 	export spmagent_mongodb__url=${array[2]}
 	export SPM_TOKEN=${array[0]}
 	spm-agent-mongodb ${array[0]} ${array[2]}  > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log   & 
+	unset SPM_TOKEN
+	unset spmagent_mongodb__url
 	IFS=$IFS_ORIGINAL
 }
 
