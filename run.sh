@@ -15,7 +15,7 @@ function get_docker_info ()
 	else 
 		echo "Docker Socket $DOCKER_SOCKET is not readable!"
 		echo "Please add -v ${DOCKER_SOCKET}:${DOCKER_SOCKET} to the docker run command"
-		echo "This will let SPM agents collect the docker hostname to tag metrics."
+	    echo "This will let SPM agents collect the docker hostname to tag metrics."
 		exit -1
 	fi
 }
@@ -95,9 +95,6 @@ function spm_client_setups ()
 }
 
 get_docker_info
-#  set hostname alias to actual docker host, until new spm-client is released
-sed -i s/spm_sender_hostname_alias=$/spm_sender_hostname_alias=${SPM_REPORTED_HOSTNAME}/g /opt/spm/properties/spm-sender.properties
-spm_client_setups 
 
 /etc/init.d/spm-monitor restart
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon & 
