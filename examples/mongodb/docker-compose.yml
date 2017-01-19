@@ -6,7 +6,7 @@ services:
    hostname: spm-client-mongo
    privileged: true
    volumes: 
-    # upcoming release will require access to docker socket, not req. for current 1.31.100
+    # spm-client > v1.31.65 requires access to docker socket
     - /var/run/docker.sock:/var/run/docker.sock
    environment:
     # token mongodb mongo-url
