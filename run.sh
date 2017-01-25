@@ -95,6 +95,7 @@ function spm_client_setups ()
 }
 
 get_docker_info
+spm_client_setups
 
 /etc/init.d/spm-monitor restart
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon & 
