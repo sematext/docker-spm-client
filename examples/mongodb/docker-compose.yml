@@ -2,7 +2,7 @@ version: '2'
 
 services:
   spm-client:
-   image: sematext/spm-client:1.31.100
+   image: sematext/spm-client
    hostname: spm-client-mongo
    privileged: true
    volumes: 
@@ -11,8 +11,8 @@ services:
    environment:
     # token mongodb mongo-url
     - SPM_CONFIG=${SPM_TOKEN} mongodb mongodb://mongodb:27017/admin
-   #links: 
-   # - mongodb
+   links: 
+    - mongodb
 
   mongodb:
    image: mongo:latest
