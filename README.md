@@ -30,6 +30,7 @@ docker run --name spm-client --restart=always -v /var/run/docker.sock:/var/run/d
 - [How use SPM Client Container with Solr](http://blog.sematext.com/2015/12/09/docker-solr-monitoring/)
 - [Monitoring Kafka on Docker Cloud](https://sematext.com/blog/2016/04/19/monitoring-kafka-on-docker-cloud/)
 - [Gist: Docker Compose Examples for Tomcat in-process and standalone monitoring](https://gist.github.com/megastef/ada049814fdb69ddca5eff296555b99c)
+- [More examples](https://github.com/sematext/docker-spm-client/tree/master/examples)
 
 
 Parameters:
