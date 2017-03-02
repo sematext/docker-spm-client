@@ -13,8 +13,8 @@ spmAppTemplates:
     spmToken: null
     portInContainer: 9200/tcp
     #sslPortInContainer: 443/tcp
-    imageName: !!js/regexp /elasticsearch/i
-    containerName: !!js/regexp /.*/
+    imageName: elasticsearch
+    containerName: .*
     # bridge(default) or host or network name
     containerNetwork: bridge
     spmConfigTemplate: ${globalConfig.setupCommand} ${spmToken} es standalone jvmname:${containerId} 
@@ -26,8 +26,8 @@ spmAppTemplates:
     spmToken: null
       #portInContainer: 3000/tcp
       #sslPortInContainer: 443/tcp
-      imageName: !!js/regexp /solr/i
-      containerName: !!js/regexp /.*/
+      imageName: solr
+      containerName: *
       # bridge(default) or host or network name
       containerNetwork: bridge
       spmConfigTemplate: ${globalConfig.setupCommand} ${spmToken} solrcloud standalone jvmname:${containerId} 
@@ -40,8 +40,8 @@ spmAppTemplates:
     spmToken: null
     portInContainer: 3306/tcp
     #sslPortInContainer: 443/tcp
-    imageName: !!js/regexp /mysql/i
-    containerName: !!js/regexp /.*/
+    imageName: mysql
+    containerName: *
     # bridge(default) or host or network name
     containerNetwork: bridge
     spmConfigTemplate: ${globalConfig.setupCommand} ${spmToken} 
