@@ -23,7 +23,11 @@
   },
   "homepage": "https://github.com/sematext/docker-spm-client#readme",
   "dependencies": {
+    "docker-allcontainers": "^0.6.1",
     "docker-modem": "^0.3.1",
-    "dockerode": "^2.3.0"
+    "dockerode": "^2.3.0",
+    "es6-template-strings": "^2.0.1",
+    "rc-yaml-2": "^1.0.2",
+    "string-template": "^1.0.0"
   }
 }
