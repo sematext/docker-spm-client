@@ -3,7 +3,7 @@ removeCommand: /opt/spm/bin/spm-remove-application.sh
 
 debug:
   printEvents: false
-  printContainerInfo: false
+  printContainerInfo: true
   printContainerEnvironment: false
   printContainerLabels: true
 
@@ -13,49 +13,11 @@ spmAppTemplates:
     spmToken: null
     portInContainer: 9200/tcp
     #sslPortInContainer: 443/tcp
-    imageName: elasticsearch
-    containerName: .*
+    matchImageName: elasticsearch
+    matchContainerName: .*
     # bridge(default) or host or network name
     containerNetwork: bridge
-    spmConfigTemplate: ${globalConfig.setupCommand} ${spmToken} es standalone jvmname:${containerId} 
-    spmRemoveTemplate: ${config.spmToken} {containerId}
-    spmConfigProperties:
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} es standalone jvmname:${containerId} 
+    spmRemoveTemplate: bash ${globalConfig.removeCommand} ${config.spmToken} ${containerId}
+    spmConfig:
        SPM_MONITOR_ES_NODE_HOSTPORT: http://${host}:${port}
-  
-  solrCloud: 
-    spmToken: null
-      #portInContainer: 3000/tcp
-      #sslPortInContainer: 443/tcp
-      imageName: solr
-      containerName: *
-      # bridge(default) or host or network name
-      containerNetwork: bridge
-      spmConfigTemplate: ${globalConfig.setupCommand} ${spmToken} solrcloud standalone jvmname:${containerId} 
-      spmRemoveTemplate: ${config.spmToken} {containerId}
-      spmConfigProperties:
-         SPM_MONITOR_JMX_PARAMS="-Dspm.remote.jmx.url=${host}:3000"
-
-
-  mysql:
-    spmToken: null
-    portInContainer: 3306/tcp
-    #sslPortInContainer: 443/tcp
-    imageName: mysql
-    containerName: *
-    # bridge(default) or host or network name
-    containerNetwork: bridge
-    spmConfigTemplate: ${globalConfig.setupCommand} ${spmToken} 
-    spmRemoveTemplate: ${config.spmToken} {containerId}
-    spmConfigProperties:
-      # ADJUST THE FOLLOWING PROPERTIES:
-      SPM_MONITOR_IN_PROCESS: "false"
-      # add tags if you want to use them, example: SPM_MONITOR_TAGS="env:foo, role:bar"
-      SPM_MONITOR_TAGS: ""
-      # add tags which should be excluded, example: SPM_SUPPRESS_TAGS="project:baz, node:qux"
-      SPM_SUPPRESS_TAGS: ""
-      # use true|false if you want to send|don't want AWS tags to SPM
-      COLLECT_AWS_TAGS: true
-      SPM_MONITOR_MYSQL_DB_HOST_PORT: ${host}:${port}
-      SPM_MONITOR_MYSQL_DB_USER: spm-user
-      SPM_MONITOR_MYSQL_DB_PASSWORD: spm-password
-      SPM_MONITOR_MYSQL_DB_ADDITIONAL_PARAMS: autoReconnect=true

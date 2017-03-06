@@ -70,7 +70,7 @@ function spm_client_setup ()
 		*mongodb* ) setup_mongodb_agent "$1";;
 		*httpd* ) setup_httpd_agent "$1";;
 		*nginx* ) setup_nginx_agent "$1";;
-		*) bash -c "/opt/spm/bin/spm-client-setup-conf.sh ${1}";;
+		*) bash -c "spm-client-setup-conf.sh ${1}";;
 	esac 
 }
 
@@ -94,8 +94,11 @@ function spm_client_setups ()
     IFS=$IFS_ORIGINAL
 }
 
+export PATH=$PATH:/opt/spm/bin
+
 get_docker_info
 spm_client_setups
+auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.yml & 
 
 /etc/init.d/spm-monitor restart
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon & 

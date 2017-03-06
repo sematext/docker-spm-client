@@ -11,6 +11,8 @@ RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/s
     npm i spm-agent-mongodb sematext-agent-httpd sematext-agent-nginx -g 
 ADD ./run.sh /run.sh
 ADD ./docker-info.js /tmp/di/docker-info.js
+ADD ./autoDiscovery.yml /tmp/di/autoDiscovery.yml
+ADD ./lib /tmp/di/lib
 ADD ./package.json  /tmp/di/package.json
 ADD ./netmap.sh /opt/spm/bin/netmap.sh
 RUN chmod +x run.sh && chmod +x /opt/spm/bin/netmap.sh && \

@@ -4,7 +4,8 @@
   "description": "This Docker Image contains [SPM](https://sematext.com/spm) Client.",
   "main": "docker-info.js",
   "bin": {
-    "docker-info": "docker-info.js"
+    "docker-info": "docker-info.js",
+    "auto-discovery": "lib/autoDiscovery.js"
   },
   "directories": {
     "example": "examples"
@@ -28,6 +29,7 @@
     "dockerode": "^2.3.0",
     "es6-template-strings": "^2.0.1",
     "rc-yaml-2": "^1.0.2",
+    "spm-agent": "^1.31.8",
     "string-template": "^1.0.0"
   }
 }
