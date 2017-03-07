@@ -17,7 +17,8 @@ spmAppTemplates:
     matchContainerName: .*
     # bridge(default) or host or network name
     containerNetwork: bridge
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} es standalone jvmname:${containerId} 
-    spmRemoveTemplate: bash ${globalConfig.removeCommand} ${config.spmToken} ${containerId}
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} es standalone jvmname:${containerName} 
+    spmRemoveTemplate: bash ${globalConfig.removeCommand} ${config.spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_ES_NODE_HOSTPORT: http://${host}:${port}
+       SPM_CONTAINER_NAME: ${containerName}
