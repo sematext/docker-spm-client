@@ -1,9 +1,23 @@
 FROM debian:jessie
-RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list && \
-    apt-get -qqy update && apt-get install -qqy socat sudo wget curl cron ntp python openjdk-8-jre-headless jq sysvinit-core sysvinit-utils build-essential && \
-    apt-get remove --purge --auto-remove systemd -y && \
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
-    echo "deb http://pub-repo.sematext.com/debian sematext main" >> /etc/apt/sources.list && \
+RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/sources.list 
+RUN apt-get -qqy update 
+RUN apt-get install -qqy apt-utils 
+RUN apt install -qqy -t jessie-backports  openjdk-8-jre-headless ca-certificates-java
+RUN apt-get install -qqy socat 
+RUN apt-get install -qqy sudo 
+RUN apt-get install -qqy wget 
+RUN apt-get install -qqy curl 
+RUN apt-get install -qqy cron 
+RUN apt-get install -qqy ntp 
+RUN apt-get install -qqy python  
+RUN apt-get install -qqy jq 
+RUN apt-get install -qqy openjdk-8-jre-headless
+RUN apt-get install -qqy sysvinit-core 
+RUN apt-get install -qqy sysvinit-utils 
+RUN apt-get install -qqy build-essential 
+RUN apt-get remove --purge --auto-remove systemd -y 
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - 
+RUN echo "deb http://pub-repo.sematext.com/debian sematext main" >> /etc/apt/sources.list && \
 	wget -O - https://pub-repo.sematext.com/debian/sematext.gpg.key |  apt-key add - && \
     apt-get update -qqy && \
     apt-get install --force-yes -qqy spm-client nodejs && \
