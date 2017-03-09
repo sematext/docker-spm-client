@@ -39,6 +39,8 @@ function setup_nginx_agent ()
 	IFS=' ' read -r -a array <<< "$1"	
 	echo "setup nginx " ${array[0]} ${array[2]} 
 	export SPM_TOKEN=${array[0]}
+	export NGINX_STATUS_PATH=${NGINX_STATUS_PATH:/nginx_status}
+	export DOCKER_AUTO_DISCOVERY=true
 	export spmagent_nginx__url=${array[2]}
 	sematext-agent-nginx ${array[0]} ${array[2]}  > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log &
 	unset SPM_TOKEN
@@ -98,6 +100,8 @@ export PATH=$PATH:/opt/spm/bin
 
 get_docker_info
 spm_client_setups
+export SPM_LOG_TO_CONSOLE='true'
+export SPM_LOG_LEVEL='info'
 auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.yml & 
 
 /etc/init.d/spm-monitor restart

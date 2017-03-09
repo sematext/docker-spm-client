@@ -18,7 +18,22 @@ spmAppTemplates:
     # bridge(default) or host or network name
     containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} es standalone jvmname:${containerName} 
-    spmRemoveTemplate: bash ${globalConfig.removeCommand} ${config.spmToken} ${containerName}
+    spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_ES_NODE_HOSTPORT: http://${host}:${port}
+       SPM_CONTAINER_NAME: ${containerName}
+
+  solrCloud: 
+    spmToken: null
+    # JMX port is not exposed
+    # portInContainer: 3000/tcp
+    jmxPort: 3000
+    matchImageName: solr
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} solrcloud standalone jvmname:${containerName} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
