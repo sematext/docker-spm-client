@@ -37,3 +37,18 @@ spmAppTemplates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+
+  tomcat: 
+    spmToken: null
+    # JMX port is not exposed
+    # portInContainer: 3000/tcp
+    jmxPort: 3000
+    matchImageName: tomcat
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} tomcat standalone jvmname:${containerName} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
+       SPM_CONTAINER_NAME: ${containerName}
