@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  spm-client:
+   image: sematext/spm-client
+   container_name: spm-client-tomcat
+   volumes: 
+     - /var/run/docker.sock:/var/run/docker.sock
+
+  tomcat:
+    image: tomcat:latest
+    hostname: tomcat
+    ports:
+      - "8888:8080"
+    labels: 
+      - SPM_TOKEN=${SPM_TOKEN}
+    environment: 
+      - CATALINA_OPTS=$CATALINA_OPTS -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
