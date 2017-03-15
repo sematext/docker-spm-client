@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  spm-client:
+   image: sematext/spm-client
+   container_name: spm-client-haproxy
+   environment: 
+     - SPM_MONITOR_HAPROXY_USER=stats
+     - SPM_MONITOR_HAPROXY_PASSWORD=stats
+   volumes: 
+     - /var/run/docker.sock:/var/run/docker.sock
+  web1:
+    image: 'dockercloud/hello-world:latest'
+  web2:
+    image: 'dockercloud/hello-world:latest'
+  lb:
+    image: 'dockercloud/haproxy:latest'
+    links:
+      - web1
+      - web2
+    ports:
+      - '8080:80'
+    labels: 
+      - SPM_TOKEN=${SPM_TOKEN}
+    environment:
+      - MONITORING_URI=/haproxy_stats
+    
