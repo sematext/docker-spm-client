@@ -52,3 +52,33 @@ spmAppTemplates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+
+  haproxy: 
+    matchImageName: /haproxy/i 
+    matchContainerName: .*
+    portInContainer: 1936/tcp
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} haproxy standalone
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${config.spmToken}
+    spmConfig:
+      SPM_CONTAINER_NAME: ${containerName}
+      SPM_MONITOR_HAPROXY_STATS_URL: http://${host}:${port}/haproxy_stats;csv
+      SPM_MONITOR_HAPROXY_USER: "${process.env.SPM_MONITOR_HAPROXY_USER}"
+      SPM_MONITOR_HAPROXY_PASSWORD: "${process.env.SPM_MONITOR_HAPROXY_PASSWORD}"
+  
+  mysql:
+    spmToken: null
+    portInContainer: 3306/tcp
+    #sslPortInContainer: 443/tcp
+    matchImageName: /mysql|mariadb|percona/i
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${config.spmToken} {containerId}
+    spmConfig:
+      SPM_MONITOR_MYSQL_DB_HOST_PORT: ${host}:${port}
+      SPM_MONITOR_MYSQL_DB_USER: ${containerEnv.MYSQL_USER}
+      SPM_MONITOR_MYSQL_DB_PASSWORD: ${containerEnv.MYSQL_PASSWORD}
+
+

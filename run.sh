@@ -106,6 +106,6 @@ auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.ym
 
 /etc/init.d/spm-monitor restart
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon & 
-tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -v INFO
+tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[Error|excpetion|failed|timeout]" 
 
 
