@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  spm-client-kafka:
+   image: sematext/spm-client:autodisco
+   container_name: spm-client-autodisco
+   hostname: spm-client-autodisco
+   links:
+    - zookeeper
+    - kafka
+   volumes: 
+     - /var/run/docker.sock:/var/run/docker.sock
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - 2181:2181
+  kafka:
+    image: wurstmeister/kafka:0.9.0.1
+    depends_on: 
+      - zookeeper
+    ports:
+      - 9092:9092
+    links:
+      - zookeeper
+    labels:
+        - SPM_TOKEN=${SPM_TOKEN}
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
+
+
+
+

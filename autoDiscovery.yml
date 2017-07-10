@@ -37,7 +37,52 @@ spmAppTemplates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-
+  
+  kafka-broker: 
+    spmToken: null
+    # JMX port is not exposed
+    # portInContainer: 3000/tcp
+    jmxPort: 3000
+    matchImageName: kafka
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-broker jvmname:${containerName} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
+       SPM_CONTAINER_NAME: ${containerName}
+  
+  kafka-producer: 
+    spmToken: null
+    # JMX port is not exposed
+    # portInContainer: 3000/tcp
+    jmxPort: 3000
+    matchImageName: kafka
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-producer jvmname:${containerName} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
+       SPM_CONTAINER_NAME: ${containerName}
+  
+  kafka-consumer: 
+    spmToken: null
+    # JMX port is not exposed
+    # portInContainer: 3000/tcp
+    jmxPort: 3000
+    matchImageName: kafka
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-consumer jvmname:${containerName} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
+       SPM_CONTAINER_NAME: ${containerName}
+  
   tomcat: 
     spmToken: null
     # JMX port is not exposed

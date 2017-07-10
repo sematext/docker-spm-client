@@ -3,6 +3,7 @@ RUN echo "deb http://http.debian.net/debian jessie-backports main" >> /etc/apt/s
 RUN apt-get -qqy update 
 RUN apt-get install -qqy apt-utils 
 RUN apt install -qqy -t jessie-backports  openjdk-8-jre-headless ca-certificates-java
+RUN apt-get install -qqy procps
 RUN apt-get install -qqy socat 
 RUN apt-get install -qqy sudo 
 RUN apt-get install -qqy wget 
