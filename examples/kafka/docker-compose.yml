@@ -2,7 +2,7 @@ version: "3"
 
 services:
   spm-client-kafka:
-   image: sematext/spm-client:autodisco
+   image: sematext/spm-client:auto-discovery
    container_name: spm-client-autodisco
    hostname: spm-client-autodisco
    links:
