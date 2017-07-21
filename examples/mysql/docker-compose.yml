@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  spm-client:
+   image: sematext/spm-client
+   hostname: spm-client-mysql
+   privileged: true
+   environment:
+      SPM_CONFIG: "${SPM_TOKEN} mysql standalone -P:SPM_MONITOR_MYSQL_DB_HOST_PORT=mysql:3306 -P:SPM_MONITOR_MYSQL_DB_USER=spm -P:SPM_MONITOR_MYSQL_DB_PASSWORD=spm-user-password"
+   volumes: 
+    # spm-client > v1.31.65 requires access to docker socket
+    - /var/run/docker.sock:/var/run/docker.sock
+   links: 
+    - mysql
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - 6603:3306
+    environment:
+      MYSQL_USER: spm
+      MYSQL_PASSWORD: spm-user-password
+      MYSQL_ROOT_PASSWORD: mysqlRootPassword
+      SPM_TOKEN: ${SPM_TOKEN}
+    volumes:
+      - /tmp/mysql:/var/lib/mysql
