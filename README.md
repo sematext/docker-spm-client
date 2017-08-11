@@ -25,6 +25,14 @@ docker run --name spm-client --restart=always -v /var/run/docker.sock:/var/run/d
 
 ```
 
+
+To change the metrics and tracing receiver URLs for Sematext Enterprise use following environment variables:
+```
+METRICS_RECEIVER=http://SEMATEXT-SERVER-IP:8449/spm-receiver
+TRACING_RECEIVER=http://SEMATEXT-SERVER-IP:8089/spm-tracing-receiver/v2
+```
+
+
 # Examples
 - [How to use SPM Client Container with Elasticsearch](http://blog.sematext.com/2015/10/28/docker-elasticsearch-how-to-monitor-the-official-elasticsearch-image-on-docker/)
 - [How use SPM Client Container with Solr](http://blog.sematext.com/2015/12/09/docker-solr-monitoring/)

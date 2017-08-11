@@ -96,9 +96,21 @@ function spm_client_setups ()
     IFS=$IFS_ORIGINAL
 }
 
+function set_receiver () {
+	if [ -n "$METRICS_RECEIVER" ]; then
+	  echo "Set metrics-receiver: $METRICS_RECEIVER"
+	  bash /opt/spm/bin/spm-client-setup-env.sh metrics-receiver:$SPM_RECEIVER	
+	fi
+	if [ -n "$TRACING_RECEIVER" ]; then
+	  echo "Set tracing-receiver: $METRICS_RECEIVER"
+      bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACING_RECEIVER
+    fi
+}
+
 export PATH=$PATH:/opt/spm/bin
 
 get_docker_info
+set_receiver
 spm_client_setups
 export SPM_LOG_TO_CONSOLE='true'
 export SPM_LOG_LEVEL='info'
