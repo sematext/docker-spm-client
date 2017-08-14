@@ -94,7 +94,19 @@ function spm_client_setups ()
     IFS=$IFS_ORIGINAL
 }
 
+function set_receiver () {
+	if [ -n "$METRICS_RECEIVER" ]; then
+	  echo "Set metrics-receiver: $METRICS_RECEIVER"
+	  bash /opt/spm/bin/spm-client-setup-env.sh metrics-receiver:$METRICS_RECEIVER
+	fi
+	if [ -n "$TRACING_RECEIVER" ]; then
+	  echo "Set tracing-receiver: $TRACING_RECEIVER"
+      bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACING_RECEIVER
+    fi
+}
+
 get_docker_info
+set_receiver
 spm_client_setups
 
 /etc/init.d/spm-monitor restart
