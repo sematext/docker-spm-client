@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  spm-client:
+   image: sematext/spm-client
+   container_name: spm-client-tc
+   hostname: spm-client-tc
+   privileged: true
+   volumes: 
+    # spm-client > v1.31.65 requires access to docker socket
+    - /var/run/docker.sock:/var/run/docker.sock
+   environment:
+    # set custom receiver URL and enable tracing
+    - SPM_CONFIG=${SPM_TOKEN} tomcat javaagent -P:SPM_MONITOR_TRACING_ENABLED=true -P:SPM_MONITOR_IN_PROCESS=true
+    - METRICS_RECEIVER=https://spm-receiver.eu.sematext.com/receiver/v1
+
+  tomcat:
+   image: tomcat:latest
+   hostname: tomcat
+   depends_on: 
+     - spm-client
+   ports:
+     - "8888:8080"
+     - "3000:3000"
+   environment: 
+     -  'CATALINA_OPTS=$CATALINA_OPTS -Dcom.sun.management.jmxremote -javaagent:/opt/spm/spm-monitor/lib/spm-monitor-tomcat.jar=${SPM_TOKEN}::default'
+   volumes_from:
+     - spm-client:rw
+
+  
