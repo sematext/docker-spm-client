@@ -79,7 +79,7 @@ function spm_client_setups ()
 	#Set the field separator to new line
 	IFS_ORIGINAL=$IFS
 	SPM_STANDALONE_MONITOR="disabled"
-	IFS=";"
+	IFS=${SPM_CONFIG_IFS:-";"}
 	if [ -n "$SPM_CONFIG" ]; then
 		for cfg in $SPM_CONFIG
 		do
