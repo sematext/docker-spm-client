@@ -30,11 +30,11 @@ ADD ./autoDiscovery.yml /tmp/di/autoDiscovery.yml
 ADD ./lib /tmp/di/lib
 ADD ./package.json  /tmp/di/package.json
 ADD ./netmap.sh /opt/spm/bin/netmap.sh
-RUN chmod +x run.sh && chmod +x /opt/spm/bin/netmap.sh && \
-    chmod +x /opt/spm/bin/spm-client-setup-conf.sh && \
-    chmod +x /tmp/di/docker-info.js && \
-    ln /usr/bin/env /bin/env && \
-    npm i /tmp/di/ -g 
+RUN chmod +x run.sh && chmod +x /opt/spm/bin/netmap.sh 
+RUN chmod +x /opt/spm/bin/spm-client-setup-conf.sh 
+RUN chmod +x /tmp/di/docker-info.js 
+RUN ln /usr/bin/env /bin/env 
+RUN npm i /tmp/di/ -g 
 ENV PATH ${PATH}:/opt/spm/bin/
 VOLUME /opt/spm
 CMD ["/run.sh"]
