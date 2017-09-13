@@ -22,7 +22,7 @@ before_install:
   - sudo apt-get update
 
 install: 
-  - docker build -t sematext/spm-client:1.31.100 . 
+  - docker build -t sematext/spm-client . 
   
 script: 
   - export SPM_TOKEN=$SPM_TOKEN
