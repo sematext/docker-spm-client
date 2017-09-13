@@ -43,6 +43,7 @@ TRACING_RECEIVER=http://SEMATEXT-SERVER-IP:8089/spm-tracing-receiver/v2
 
 Parameters:
 - SPM_CONFIG - Multiple App configurations for spm-client-setup-conf.sh separated by ";". 
+- SPM_CONFIG_IFS - A custom config separator in cases where ";" is used as part of a config (like HaProxy stats url)
 
 Any Linux command can be executed to modify the configuration using "docker exec -it spm-client your_linux_command" :
 
