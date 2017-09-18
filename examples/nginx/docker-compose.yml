@@ -16,10 +16,10 @@ services:
 
   nginx:
    image: nginx:latest
-   ports:
-    - "9001:80"
+   #ports:
+   # - "9001:80"
    environment: 
-    - SPM_TOKEN=0d1de046-1608-4893-808e-4fdd28d087f6
+    - SPM_TOKEN=${SPM_TOKEN}
    volumes: 
     - ${PWD}/default.conf:/etc/nginx/conf.d/default.conf
     # default.conf contains following entry to activate the status url:

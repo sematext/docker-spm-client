@@ -2,10 +2,10 @@ setupCommand: /opt/spm/bin/spm-client-setup-conf.sh
 removeCommand: /opt/spm/bin/spm-remove-application.sh
 
 debug:
-  printEvents: true
-  printContainerInfo: true
+  printEvents: false
+  printContainerInfo: false
   printContainerEnvironment: false
-  printContainerLabels: true
+  printContainerLabels: false
 
 spmAppTemplates:
   nginx:
@@ -17,8 +17,8 @@ spmAppTemplates:
     matchContainerName: .*
     # bridge(default) or host or network name
     containerNetwork: bridge
-    spmSetupTemplate: setup-nginx --token ${spmToken} --url http://${host}:${port}/nginx_status --config /tmp/${containerName}.yml 
-    spmRemoveTemplate: bash -c "kill $(ps -ef | grep ${containerName}.yml | head -1 | awk '{print $2}') && rm /tmp/${containerName}.yml" 
+    spmSetupTemplate: setup-nginx --token ${spmToken} --url http://${host}:${port}/nginx_status --config "/tmp/${containerName}.yml" 
+    spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml 
 
   elasticsearch:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 

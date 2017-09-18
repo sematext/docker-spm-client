@@ -6,7 +6,8 @@
   "bin": {
     "docker-info": "docker-info.js",
     "auto-discovery": "lib/autoDiscovery.js",
-    "setup-nginx": "lib/setup-nginx.js"
+    "setup-nginx": "lib/setup-nginx.js",
+    "remove-nginx": "lib/remove-nginx.sh"
   },
   "directories": {
     "example": "examples"
