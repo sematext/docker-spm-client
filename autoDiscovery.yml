@@ -9,7 +9,7 @@ debug:
 
 spmAppTemplates:
   nginx:
-    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
+    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token nginx 
     spmToken: null
     portInContainer: 80/tcp
     #sslPortInContainer: 443/tcp
