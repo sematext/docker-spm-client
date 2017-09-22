@@ -2,22 +2,24 @@ version: '2'
 
 services:
   spm-client:
-   image: sematext/spm-client
-   hostname: spm-client-httpd
+   image: sematext/spm-client:auto-discovery
+   hostname: spm-client-nginx
    privileged: true
    volumes: 
     # spm-client > v1.31.65 requires access to docker socket
     - /var/run/docker.sock:/var/run/docker.sock
-   environment:
-    # token httpd httpd_status_url
-    - SPM_CONFIG=${SPM_TOKEN} httpd http://httpd:80/server-status
+   #environment:
+    # token nginx nginx_status_url
+    # - SPM_CONFIG=${SPM_TOKEN} nginx http://nginx:80/nginx_status
    links: 
     - httpd
 
   httpd:
    image: httpd:latest
-   ports:
-    - "80:80"
+   environment: 
+     - SPM_TOKEN=${SPM_TOKEN}
+   #ports:
+   # - "9080:80"
    volumes: 
     #  httpd.conf requires following entry: 
     #  LoadModule status_module modules/mod_status.so
@@ -25,3 +27,5 @@ services:
     #    SetHandler server-status
     #  </Location>
     - ${PWD}/httpd.conf:/usr/local/apache2/conf/httpd.conf
+
+    

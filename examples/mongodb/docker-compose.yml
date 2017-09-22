@@ -2,7 +2,7 @@ version: '2'
 
 services:
   spm-client:
-   image: sematext/spm-client
+   image: sematext/spm-client:auto-discovery
    hostname: spm-client-mongo
    privileged: true
    volumes: 
@@ -16,8 +16,12 @@ services:
 
   mongodb:
    image: mongo:latest
-   ports:
-    - "27017:27017"
+   environment: 
+     - SPM_TOKEN=${SPM_TOKEN}
+   #ports:
+   # - "27017:27017"
+
+
 
 
   

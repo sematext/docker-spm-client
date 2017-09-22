@@ -18,7 +18,31 @@ spmAppTemplates:
     # bridge(default) or host or network name
     containerNetwork: bridge
     spmSetupTemplate: setup-nginx --token ${spmToken} --url http://${host}:${port}/nginx_status --config "/tmp/${containerName}.yml" 
-    spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml 
+    spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml
+
+  httpd:
+    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token nginx 
+    spmToken: null
+    portInContainer: 80/tcp
+    #sslPortInContainer: 443/tcp
+    matchImageName: httpd
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: setup-httpd --token ${spmToken} --url http://${host}:${port}/server-status --config "/tmp/${containerName}.yml" 
+    spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml  
+
+  mongodb:
+    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token nginx 
+    spmToken: null
+    portInContainer: 27017/tcp
+    #sslPortInContainer: 443/tcp
+    matchImageName: mongo
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: setup-mongodb --token ${spmToken} --url mongodb://${host}:${port}/admin --config "/tmp/${containerName}.yml" 
+    spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml  
 
   elasticsearch:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
