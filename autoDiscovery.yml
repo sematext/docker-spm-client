@@ -21,7 +21,7 @@ spmAppTemplates:
     spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml
 
   httpd:
-    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token nginx 
+    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token httpd 
     spmToken: null
     portInContainer: 80/tcp
     #sslPortInContainer: 443/tcp
@@ -33,7 +33,7 @@ spmAppTemplates:
     spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml  
 
   mongodb:
-    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token nginx 
+    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token mongo 
     spmToken: null
     portInContainer: 27017/tcp
     #sslPortInContainer: 443/tcp
