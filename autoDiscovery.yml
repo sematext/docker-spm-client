@@ -134,6 +134,38 @@ spmAppTemplates:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
 
+  zookeeper: 
+    spmToken: null
+    # JMX port is not exposed
+    # portInContainer: 3000/tcp
+    # Note ZK needs to open JMX port 
+    jmxPort: 3000
+    matchImageName: zookeeper
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} zk standalone jvmname:${containerName} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
+       SPM_CONTAINER_NAME: ${containerName}
+
+  cassandra: 
+    spmToken: null
+    # JMX port is not exposed
+    # portInContainer: 3000/tcp
+    # Note Cassandra needs to open JMX port 
+    jmxPort: 3000
+    matchImageName: cassandra
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} cassandra standalone jvmname:${containerName} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
+       SPM_CONTAINER_NAME: ${containerName}
+
   haproxy: 
     matchImageName: /haproxy/i 
     matchContainerName: .*
