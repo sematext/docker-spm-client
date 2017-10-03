@@ -19,6 +19,8 @@ spmAppTemplates:
     containerNetwork: bridge
     spmSetupTemplate: setup-nginx --token ${spmToken} --url http://${host}:${port}/nginx_status --config "/tmp/${containerName}.yml" 
     spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml
+    spmConfig:
+       SPM_REPORTED_HOSTNAME: ${containerName}
 
   httpd:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token httpd 
@@ -43,6 +45,23 @@ spmAppTemplates:
     containerNetwork: bridge
     spmSetupTemplate: setup-mongodb --token ${spmToken} --url mongodb://${host}:${port}/admin --config "/tmp/${containerName}.yml" 
     spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml  
+  
+  jvm:
+    spmToken: null
+    # JMX port is not exposed
+    # portInContainer: 3000/tcp
+    # Note JVM needs to open JMX port 
+    jmxPort: 3000
+    # edit your image names ...
+    matchImageName: java|spring|jetty
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} jvm standalone jvmname:${containerName} 
+    spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
+       SPM_CONTAINER_NAME: ${containerName}
 
   elasticsearch:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
