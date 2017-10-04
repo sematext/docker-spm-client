@@ -1,6 +1,5 @@
 setupCommand: /opt/spm/bin/spm-client-setup-conf.sh
 removeCommand: /opt/spm/bin/spm-remove-application.sh
-myVar: hello
 
 debug:
   printEvents: true
