@@ -1,13 +1,11 @@
 version: "3"
 
 services:
-  spm-client-kafka:
+  spm-client:
    image: sematext/spm-client:auto-discovery
-   container_name: spm-client-autodisco
-   hostname: spm-client-autodisco
-   links:
-    - zookeeper
-    - kafka
+   # links:
+   # - zookeeper
+   # - kafka
    volumes: 
      - /var/run/docker.sock:/var/run/docker.sock
 
@@ -15,6 +13,12 @@ services:
     image: wurstmeister/zookeeper
     ports:
       - 2181:2181
+    labels: 
+      - SPM_TOKEN=${SPM_ZK_TOKEN}
+    environment:
+      JAVA_OPTS: -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
+      JMX_PORT: 3000
+      
   kafka:
     image: wurstmeister/kafka:0.9.0.1
     depends_on: 
