@@ -225,7 +225,7 @@ spmAppTemplates:
     matchContainerName: .*
     # bridge(default) or host or network name
     containerNetwork: bridge
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} 
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} mysql standalone
     spmRemoveTemplate: ${globalConfig.removeCommand} ${config.spmToken} {containerId}
     spmConfig:
       SPM_MONITOR_MYSQL_DB_HOST_PORT: ${host}:${port}
