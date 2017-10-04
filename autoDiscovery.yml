@@ -1,8 +1,9 @@
 setupCommand: /opt/spm/bin/spm-client-setup-conf.sh
 removeCommand: /opt/spm/bin/spm-remove-application.sh
+myVar: hello
 
 debug:
-  printEvents: false
+  printEvents: true
   printContainerInfo: false
   printContainerEnvironment: false
   printContainerLabels: false
@@ -62,6 +63,7 @@ spmAppTemplates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+       SPM_CONTAINER_ID: ${containerId}
 
   elasticsearch:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
@@ -77,6 +79,24 @@ spmAppTemplates:
     spmConfig:
        SPM_MONITOR_ES_NODE_HOSTPORT: http://${host}:${port}
        SPM_CONTAINER_NAME: ${containerName}
+       #SPM_MONITORING_TAGS: 'cn:${containerName},cid:{containerId},ci:${container.Image}'
+  
+  redis:
+    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
+    spmToken: null
+    portInContainer: 6379/tcp
+    matchImageName: redis
+    matchContainerName: .*
+    # bridge(default) or host or network name
+    containerNetwork: bridge
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} redis standalone jvmname:${containerName} 
+    spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmConfig:
+       REDIS_HOST: ${host}
+       REDIS_PORT: ${port}
+       REDIS_PASSWORD: null
+       SPM_CONTAINER_NAME: ${containerName}
+       SPM_MONITORING_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image}'
 
   solrCloud: 
     spmToken: null
@@ -212,5 +232,6 @@ spmAppTemplates:
       SPM_MONITOR_MYSQL_DB_HOST_PORT: ${host}:${port}
       SPM_MONITOR_MYSQL_DB_USER: ${containerEnv.MYSQL_USER}
       SPM_MONITOR_MYSQL_DB_PASSWORD: ${containerEnv.MYSQL_PASSWORD}
+      SPM_CONTAINER_NAME: ${containerName}
 
 

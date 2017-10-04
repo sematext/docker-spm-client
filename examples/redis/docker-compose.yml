@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  spm-client:
+   image: sematext/spm-client:auto-discovery
+   privileged: true
+   volumes: 
+    - /var/run/docker.sock:/var/run/docker.sock
+
+  redis:
+   image: redis:latest
+   environment: 
+     SPM_TOKEN: ${SPM_TOKEN}
+
+
