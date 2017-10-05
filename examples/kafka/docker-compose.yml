@@ -16,15 +16,15 @@ services:
     labels: 
       - SPM_TOKEN=${SPM_ZK_TOKEN}
     environment:
-      JAVA_OPTS: -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
-      JMX_PORT: 3000
-      
+      # ZOOMAIN: -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
+      JMXPORT: 3000
+
   kafka:
     image: wurstmeister/kafka:0.9.0.1
     depends_on: 
       - zookeeper
     ports:
-      - 9092:9092
+      - 2181:2181
     links:
       - zookeeper
     labels:
