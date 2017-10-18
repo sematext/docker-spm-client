@@ -32,6 +32,8 @@
     "docker-modem": "^0.3.1",
     "dockerode": "^2.3.0",
     "es6-template-strings": "^2.0.1",
+    "json-stream": "^1.0.0",
+    "kubernetes-client": "^3.16.0",
     "minimist": "^1.2.0",
     "rc-yaml-2": "^1.0.2",
     "split2": "^2.1.1",
