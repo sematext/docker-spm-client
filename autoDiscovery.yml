@@ -192,8 +192,8 @@ spmAppTemplates:
     spmToken: null
     # JMX port is not exposed
     # portInContainer: 3000/tcp
-    # Note Cassandra needs to open JMX port 
-    jmxPort: 3000
+    # Note Cassandra needs to open JMX port use LOCAL_JMX=no for cassandra container
+    jmxPort: 7199 
     matchImageName: cassandra
     matchContainerName: .*
     # bridge(default) or host or network name
