@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: sematext-spm-client
+spec:
+  template:
+    metadata:
+      labels:
+        app: sematext-spm-client
+    spec:
+      nodeSelector: {}
+      hostNetwork: true
+      dnsPolicy: "ClusterFirst"
+      restartPolicy: "Always"
+      containers:
+      - name:  semtext-spm-client
+        image: sematext/spm-client:auto-discovery
+        imagePullPolicy: "Always"
+        volumeMounts:
+          - mountPath: /var/run/docker.sock
+            name: docker-sock
+          - mountPath: /etc/localtime
+            name: localtime
+          - mountPath: /rootfs
+            name: rootfs
+            readOnly: true
+        securityContext:
+          privileged: true
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+        - name: rootfs
+          hostPath:
+            path: /
