@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  spm-client:
+   image: sematext/spm-client:auto-discovery
+   privileged: true
+   volumes: 
+    - /var/run/docker.sock:/var/run/docker.sock
+
+  cassandra:
+    hostname: cassandra-1
+    image: oberthur/docker-cassandra:latest
+    #command: docker-entrypoint.sh cassandra -f
+    environment:
+      SPM_TOKEN: 'e31cc380-2e9c-4347-995a-41903a741b20'
+      LOCAL_JMX: 'no'
+      JMX_PORT: 7199
+      JVM_OPTS: -Dcom.sun.management.jmxremote.port=7199 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
+    expose:
+      - 7000
+      - 7001
+      - 7199
+      - 9042
+      - 9160
