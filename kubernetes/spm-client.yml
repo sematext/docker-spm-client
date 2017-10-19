@@ -13,19 +13,19 @@ spec:
       dnsPolicy: "ClusterFirst"
       restartPolicy: "Always"
       containers:
-      - name:  semtext-spm-client
-        image: sematext/spm-client:auto-discovery
-        imagePullPolicy: "Always"
-        volumeMounts:
-          - mountPath: /var/run/docker.sock
-            name: docker-sock
-          - mountPath: /etc/localtime
-            name: localtime
-          - mountPath: /rootfs
-            name: rootfs
-            readOnly: true
-        securityContext:
-          privileged: true
+        - name:  semtext-spm-client
+          image: sematext/spm-client:auto-discovery
+          imagePullPolicy: "Always"
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-sock
+            - mountPath: /etc/localtime
+              name: localtime
+            - mountPath: /rootfs
+              name: rootfs
+              readOnly: true
+          securityContext:
+            privileged: true
       volumes:
         - name: docker-sock
           hostPath:
@@ -36,3 +36,4 @@ spec:
         - name: rootfs
           hostPath:
             path: /
+
