@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   spm-client:
@@ -10,6 +10,6 @@ services:
   redis:
    image: redis:latest
    environment: 
-     SPM_TOKEN: ${SPM_TOKEN}
+     - SPM_TOKEN: ${SPM_TOKEN}
 
 
