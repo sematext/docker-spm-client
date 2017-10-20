@@ -2,7 +2,7 @@ version: "3"
 
 services:
   spm-client:
-   image: sematext/spm-client
+   image: sematext/spm-client:auto-discovery
    container_name: spm-client-tomcat
    volumes: 
      - /var/run/docker.sock:/var/run/docker.sock
