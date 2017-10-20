@@ -14,12 +14,13 @@ services:
    links: 
     - mongodb
 
+version: '3'
   mongodb:
    image: mongo:latest
    environment: 
      - SPM_TOKEN=${SPM_TOKEN}
-   #ports:
-   # - "27017:27017"
+   ports:
+    - "27017:27017"
 
 
 
