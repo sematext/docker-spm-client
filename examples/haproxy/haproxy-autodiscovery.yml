@@ -2,7 +2,7 @@ version: "3"
 
 services:
   spm-client:
-   image: sematext/spm-client
+   image: sematext/spm-client:auto-discovery
    container_name: spm-client-haproxy
    environment: 
      - SPM_MONITOR_HAPROXY_USER=stats
@@ -19,9 +19,8 @@ services:
       - web1
       - web2
     ports:
-      - '8080:80'
-    labels: 
-      - SPM_TOKEN=${SPM_TOKEN}
+      - '8080:80'      
     environment:
+      - SPM_TOKEN=${SPM_TOKEN}
       - MONITORING_URI=/haproxy_stats
     
