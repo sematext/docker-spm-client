@@ -2,7 +2,7 @@ version: "3"
 
 services:
   spm-client-solr:
-   image: sematext/spm-client
+   image: sematext/spm-client:auto-discovery
    container_name: spm-client-autodisco
    hostname: spm-client-autodisco
    volumes: 
@@ -22,8 +22,7 @@ services:
     image: solr
     ports:
       - "8984:8983"
-    labels:
-      - SPM_TOKEN=${SPM_TOKEN}
     environment:
+      - SPM_TOKEN=${SPM_TOKEN}
       - SOLR_OPTS=-Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
     command: bin/solr -f
