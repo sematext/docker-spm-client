@@ -12,7 +12,7 @@ services:
     ports:
       - 6603:3306
     environment:
-      SPM_TOKEN: 3c3e0027-c91b-468d-ab59-ebf057c8603e
+      SPM_TOKEN: ${SPM_TOKEN}
       MYSQL_USER: spm
       MYSQL_PASSWORD: spm-user-password
       MYSQL_ROOT_PASSWORD: mysqlRootPassword
