@@ -1,20 +1,18 @@
-spm-client:
- image: spmclient:auto-discovery
- container_name: spm-client
- # share the network with the host to reach ES on localhost:9200
- hostname: moby
- net: host
-volumes: 
-    # spm-client > v1.31.65 requires access to docker socket
-    - /var/run/docker.sock:/var/run/docker.sock
+version: '3'
+services:
+  spm-client:
+   image: spmclient:auto-discovery
+   volumes: 
+      # spm-client > v1.31.65 requires access to docker socket
+      - /var/run/docker.sock:/var/run/docker.sock
 
-elasticsearch:
- image: elasticsearch:latest
- ports:
- - "9200:9200"
- environment:
-   # SPM Token from http://apps.sematext.com
-   - SPM_TOKEN=${SPM_TOKEN}
- volumes:
- # set your data directory and other options ...
- - /tmp/es-data/:/usr/share/elasticsearch/data
+  elasticsearch:
+   image: elasticsearch:latest
+   ports:
+   - "9200:9200"
+   environment:
+     # SPM Token from http://apps.sematext.com
+     - SPM_TOKEN=${SPM_TOKEN}
+   volumes:
+     # set your data directory and other options ...
+     - /tmp/es-data/:/usr/share/elasticsearch/data
