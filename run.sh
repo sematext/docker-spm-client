@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Configure SPM 
 export STANDALONE_LOG_DIR=/opt/spm/spm-monitor/logs/standalone/
+
 function get_docker_info () 
 {
 	export DOCKER_SOCKET=/var/run/docker.sock
@@ -97,6 +98,12 @@ function spm_client_setups ()
 }
 
 function set_receiver () {
+	if [ -n "$LOGS_TOKEN_RECEIVER_URL" ]; then
+		export LOGSENE_RECEIVER_URL = "${LOGS_TOKEN_RECEIVER_URL}"
+	fi
+	if [ -n "$EVENT_RECEIVER_URL" ]; then
+		export EVENTS_RECEIVER_URL = "${EVENTS_RECEIVER_URL}"
+	fi
 	# Accept Region value
 	if [ -n "$REGION" ]; then
 		# generate region receiver settings for Java based agents
@@ -117,13 +124,13 @@ function set_receiver () {
 	  bash /opt/spm/bin/spm-client-setup-env.sh metrics-receiver:$METRICS_RECEIVER
 	  export SPM_RECEIVER=$METRICS_RECEIVER_URL
 	fi
-	if [ -n "$TRACING_RECEIVER_URL" ]; then
+	if [ -n "$TRACE_RECEIVER_URL" ]; then
 	  echo "Set tracing-receiver: $TRACING_RECEIVER_URL"
-    bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACING_RECEIVER_URL
+    bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACE_RECEIVER_URL
   fi
 	if [ -n "$TRACING_RECEIVER" ]; then
 	  echo "Set tracing-receiver: $TRACING_RECEIVER"
-    bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACING_RECEIVER
+    bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACE_RECEIVER
   fi
   
 }

@@ -20,9 +20,9 @@ __Sematext Cloud__
 __Sematext Enterprise__ 
 
 - METRICS_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
-- TRACING_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
-- EVENTS_RECEIVER_URL - The events receiver URL for Sematext Enterprise
-- LOGSENE_RECEIVER_URL - The Logsene receiver URL for Sematext Enterprise
+- TRACE_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- EVENT_RECEIVER_URL - The events receiver URL for Sematext Enterprise
+- LOG_TOKEN_RECEIVER_URL - The Logsene receiver URL for Sematext Enterprise
 
 
 *Note: Skip Step 1, if you have already deployed SPM-Client on your cluster.*
@@ -96,9 +96,9 @@ __Sematext Cloud__
 __Sematext Enterprise__ 
 
 - METRICS_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
-- TRACING_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
-- EVENTS_RECEIVER_URL - The events receiver URL for Sematext Enterprise
-- LOGSENE_RECEIVER_URL - The Logsene receiver URL for Sematext Enterprise
+- TRACE_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- EVENT_RECEIVER_URL - The events receiver URL for Sematext Enterprise
+- LOG_TOKEN_RECEIVER_URL - The Logsene receiver URL for Sematext Enterprise
 
 
 __Step 2__
