@@ -10,6 +10,21 @@ docker service create --mode global --name spm-client \
 --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
 sematext/spm-client:auto-discovery
 ```
+
+### Optional environment variables: 
+
+__Sematext Cloud__ 
+
+- REGION - US or EU will set Sematext Cloud API endpoints for the given region
+
+__Sematext Enterprise__ 
+
+- METRICS_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- TRACING_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- EVENTS_RECEIVER_URL - The events receiver URL for Sematext Enterprise
+- LOGSENE_RECEIVER_URL - The Logsene receiver URL for Sematext Enterprise
+
+
 *Note: Skip Step 1, if you have already deployed SPM-Client on your cluster.*
 
 __Step 2__
@@ -46,6 +61,9 @@ spec:
         - name:  semtext-spm-client
           image: sematext/spm-client:auto-discovery
           imagePullPolicy: "Always"
+          env:
+            - name: REGION
+              value: US  # please set this value to "EU" for Sematext Cloud Europe
           volumeMounts:
             - mountPath: /var/run/docker.sock
               name: docker-sock
@@ -68,6 +86,20 @@ spec:
             path: /
 
 ```
+
+### Optional environment variables: 
+
+__Sematext Cloud__ 
+
+- REGION - US or EU will set Sematext Cloud API endpoints for the given region
+
+__Sematext Enterprise__ 
+
+- METRICS_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- TRACING_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- EVENTS_RECEIVER_URL - The events receiver URL for Sematext Enterprise
+- LOGSENE_RECEIVER_URL - The Logsene receiver URL for Sematext Enterprise
+
 
 __Step 2__
 
