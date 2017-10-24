@@ -97,14 +97,35 @@ function spm_client_setups ()
 }
 
 function set_receiver () {
+	# Accept Region value
+	if [ -n "$REGION" ]; then
+		# generate region receiver settings for Java based agents
+		#                                                 $REGION converted to lowercase
+		bash /opt/spm/bin/spm-client-setup-env.sh region:${REGION,,}
+		# generate region receiver settings for nodejs based agents
+		#                         $REGION converted to upper case
+		sematext-nginx-setup -r ${REGION^^}
+	fi
+
+	if [ -n "$METRICS_RECEIVER_URL" ]; then
+	  echo "Set metrics-receiver: $METRICS_RECEIVER_URL"
+	  bash /opt/spm/bin/spm-client-setup-env.sh metrics-receiver:$METRICS_RECEIVER_URL
+	  export SPM_RECEIVER=$METRICS_RECEIVER_URL
+	fi
 	if [ -n "$METRICS_RECEIVER" ]; then
 	  echo "Set metrics-receiver: $METRICS_RECEIVER"
-	  bash /opt/spm/bin/spm-client-setup-env.sh metrics-receiver:$SPM_RECEIVER	
+	  bash /opt/spm/bin/spm-client-setup-env.sh metrics-receiver:$METRICS_RECEIVER
+	  export SPM_RECEIVER=$METRICS_RECEIVER_URL
 	fi
+	if [ -n "$TRACING_RECEIVER_URL" ]; then
+	  echo "Set tracing-receiver: $TRACING_RECEIVER_URL"
+    bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACING_RECEIVER_URL
+  fi
 	if [ -n "$TRACING_RECEIVER" ]; then
-	  echo "Set tracing-receiver: $METRICS_RECEIVER"
-      bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACING_RECEIVER
-    fi
+	  echo "Set tracing-receiver: $TRACING_RECEIVER"
+    bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACING_RECEIVER
+  fi
+  
 }
 
 export PATH=$PATH:/opt/spm/bin
