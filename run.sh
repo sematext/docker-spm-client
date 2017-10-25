@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Configure SPM 
+# Configure SPM
 export STANDALONE_LOG_DIR=/opt/spm/spm-monitor/logs/standalone/
 
-function get_docker_info () 
+function get_docker_info ()
 {
 	export DOCKER_SOCKET=/var/run/docker.sock
 	if test -r $DOCKER_SOCKET; then
@@ -13,7 +13,7 @@ function get_docker_info ()
 		chmod 555 /opt/spm/.docker
 		echo content of /opt/spm/.docker:
 		cat /opt/spm/.docker
-	else 
+	else
 		echo "Docker Socket $DOCKER_SOCKET is not readable!"
 		echo "Please add -v ${DOCKER_SOCKET}:${DOCKER_SOCKET} to the docker run command"
 	    echo "This will let SPM agents collect the docker hostname to tag metrics."
@@ -21,29 +21,29 @@ function get_docker_info ()
 	fi
 }
 
-function setup_httpd_agent () 
+function setup_httpd_agent ()
 {
 	IFS_ORIGINAL=$IFS
-	IFS=' ' read -r -a array <<< "$1"	
-	echo "setup httpd " ${array[0]} ${array[2]} 
+	IFS=' ' read -r -a array <<< "$1"
+	echo "setup httpd " ${array[0]} ${array[2]}
 	export SPM_TOKEN=${array[0]}
 	export spmagent_httpd__url=${array[2]}
-	sematext-agent-httpd ${array[0]} ${array[2]}  > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log & 
+	sematext-agent-httpd ${array[0]} ${array[2]} > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log &
 	unset SPM_TOKEN
 	unset spmagent_httpd__url
 	IFS=$IFS_ORIGINAL
 }
 
-function setup_nginx_agent () 
+function setup_nginx_agent ()
 {
 	IFS_ORIGINAL=$IFS
-	IFS=' ' read -r -a array <<< "$1"	
-	echo "setup nginx " ${array[0]} ${array[2]} 
+	IFS=' ' read -r -a array <<< "$1"
+	echo "setup nginx " ${array[0]} ${array[2]}
 	export SPM_TOKEN=${array[0]}
 	export NGINX_STATUS_PATH=${NGINX_STATUS_PATH:/nginx_status}
 	export DOCKER_AUTO_DISCOVERY=true
 	export spmagent_nginx__url=${array[2]}
-	sematext-agent-nginx ${array[0]} ${array[2]}  > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log &
+	sematext-agent-nginx ${array[0]} ${array[2]} > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log &
 	unset SPM_TOKEN
 	unset spmagent_nginx__url
 	IFS=$IFS_ORIGINAL
@@ -52,17 +52,17 @@ function setup_nginx_agent ()
 function setup_mongodb_agent()
 {
 	IFS_ORIGINAL=$IFS
-	IFS=' ' read -r -a array <<< "$1"	
-	echo "setup mongodb token="${array[0]} "url="${array[2]} 
+	IFS=' ' read -r -a array <<< "$1"
+	echo "setup mongodb token="${array[0]} "url="${array[2]}
 	export spmagent_mongodb__url=${array[2]}
 	export SPM_TOKEN=${array[0]}
-	spm-agent-mongodb ${array[0]} ${array[2]}  > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log   & 
+	spm-agent-mongodb ${array[0]} ${array[2]} > $STANDALONE_LOG_DIR/spm-monitor-${array[1]}-config-${array[0]}-default.log &
 	unset SPM_TOKEN
 	unset spmagent_mongodb__url
 	IFS=$IFS_ORIGINAL
 }
 
-function spm_client_setup () 
+function spm_client_setup ()
 {
 	echo "spm_config_setup() $1"
 	case "$1" in
@@ -74,10 +74,10 @@ function spm_client_setup ()
 		*httpd* ) setup_httpd_agent "$1";;
 		*nginx* ) setup_nginx_agent "$1";;
 		*) bash -c "spm-client-setup-conf.sh ${1}";;
-	esac 
+	esac
 }
 
-function spm_client_setups () 
+function spm_client_setups ()
 {
 	#Set the field separator to new line
 	IFS_ORIGINAL=$IFS
@@ -86,8 +86,8 @@ function spm_client_setups ()
 	if [ -n "$SPM_CONFIG" ]; then
 		for cfg in $SPM_CONFIG
 		do
-		  set IFS = $IFS_ORIGINAL	
-		  echo "-" "$cfg"  
+		  IFS=$IFS_ORIGINAL
+		  echo "-" "$cfg"
 		  spm_client_setup "$cfg"
 		  # bash -c "/opt/spm/bin/spm-client-setup-conf.sh $cfg"
 		  # Check for standalone monitors
@@ -99,10 +99,10 @@ function spm_client_setups ()
 
 function set_receiver () {
 	if [ -n "$LOGS_TOKEN_RECEIVER_URL" ]; then
-		export LOGSENE_RECEIVER_URL = "${LOGS_TOKEN_RECEIVER_URL}"
+		export LOGSENE_RECEIVER_URL="${LOGS_TOKEN_RECEIVER_URL}"
 	fi
 	if [ -n "$EVENT_RECEIVER_URL" ]; then
-		export EVENTS_RECEIVER_URL = "${EVENTS_RECEIVER_URL}"
+		export EVENTS_RECEIVER_URL="${EVENT_RECEIVER_URL}"
 	fi
 	if [ -n "$METRICS_RECEIVER_URL" ]; then
 	  echo "Set metrics-receiver: $METRICS_RECEIVER_URL"
@@ -110,9 +110,9 @@ function set_receiver () {
 	  export SPM_RECEIVER=$METRICS_RECEIVER_URL
 	fi
 	if [ -n "$TRACE_RECEIVER_URL" ]; then
-	  echo "Set tracing-receiver: $TRACING_RECEIVER_URL"
-    bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACE_RECEIVER_URL
-  fi
+	  echo "Set tracing-receiver: $TRACE_RECEIVER_URL"
+      bash /opt/spm/bin/spm-client-setup-env.sh tracing-receiver:$TRACE_RECEIVER_URL
+    fi
 
 	# Accept Region value, this might overwrite given receiver URL's!
 	if [ -n "$REGION" ]; then
@@ -120,7 +120,7 @@ function set_receiver () {
 		#                                                 $REGION converted to lowercase
 		bash /opt/spm/bin/spm-client-setup-env.sh region:${REGION,,}
 		# generate region receiver settings for nodejs based agents
-		#                         $REGION converted to upper case
+		#                        $REGION converted to upper case
 		sematext-nginx-setup -r ${REGION^^}
 	fi
 }
@@ -132,10 +132,8 @@ set_receiver
 spm_client_setups
 export SPM_LOG_TO_CONSOLE='true'
 export SPM_LOG_LEVEL='info'
-auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.yml & 
+auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.yml &
 
 /etc/init.d/spm-monitor restart
-# /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon & 
-tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[Error|excpetion|failed|timeout]" 
-
-
+# /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon &
+tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[Error|excpetion|failed|timeout]"
