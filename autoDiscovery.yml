@@ -221,7 +221,7 @@ spmAppTemplates:
     spmToken: null
     portInContainer: 3306/tcp
     #sslPortInContainer: 443/tcp
-    matchImageName: /mysql|mariadb|percona/i
+    matchImageName: mysql|mariadb|percona
     matchContainerName: .*
     # bridge(default) or host or network name
     containerNetwork: bridge
