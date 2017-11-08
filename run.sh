@@ -107,7 +107,7 @@ function set_receiver () {
 	if [ -n "$METRICS_RECEIVER_URL" ]; then
 	  echo "Set metrics-receiver: $METRICS_RECEIVER_URL"
 	  bash /opt/spm/bin/spm-client-setup-env.sh metrics-receiver:$METRICS_RECEIVER_URL
-	  export SPM_RECEIVER=$METRICS_RECEIVER_URL
+	  export SPM_RECEIVER_URL=$METRICS_RECEIVER_URL
 	fi
 	if [ -n "$TRACE_RECEIVER_URL" ]; then
 	  echo "Set tracing-receiver: $TRACE_RECEIVER_URL"
