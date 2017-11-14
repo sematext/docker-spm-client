@@ -55,6 +55,7 @@ spec:
     spec:
       nodeSelector: {}
       hostNetwork: true
+      hostPID: true
       dnsPolicy: "ClusterFirst"
       restartPolicy: "Always"
       containers:
