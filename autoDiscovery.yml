@@ -12,11 +12,8 @@ spmAppTemplates:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token nginx 
     spmToken: null
     portInContainer: 80/tcp
-    #sslPortInContainer: 443/tcp
     matchImageName: nginx
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: setup-nginx --token ${spmToken} --url http://${host}:${port}/nginx_status --config "/tmp/${containerName}.yml" 
     spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml
     spmConfig:
@@ -29,8 +26,6 @@ spmAppTemplates:
     #sslPortInContainer: 443/tcp
     matchImageName: httpd
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: setup-httpd --token ${spmToken} --url http://${host}:${port}/server-status --config "/tmp/${containerName}.yml" 
     spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml  
 
@@ -38,11 +33,8 @@ spmAppTemplates:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token mongo 
     spmToken: null
     portInContainer: 27017/tcp
-    #sslPortInContainer: 443/tcp
     matchImageName: mongo
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: setup-mongodb --token ${spmToken} --url mongodb://${host}:${port}/admin --config "/tmp/${containerName}.yml" 
     spmRemoveTemplate: stop-node-agent /tmp/${containerName}.yml  
   
@@ -55,8 +47,6 @@ spmAppTemplates:
     # edit your image names ...
     matchImageName: java|spring|jetty
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} jvm standalone jvmname:${containerName} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
@@ -68,17 +58,14 @@ spmAppTemplates:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
     spmToken: null
     portInContainer: 9200/tcp
-    #sslPortInContainer: 443/tcp
     matchImageName: elasticsearch
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} es standalone jvmname:${containerName} 
     spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_ES_NODE_HOSTPORT: http://${host}:${port}
        SPM_CONTAINER_NAME: ${containerName}
-       #SPM_MONITORING_TAGS: 'cn:${containerName},cid:{containerId},ci:${container.Image}'
+       SPM_MONITORING_TAGS: 'cn:${containerName},cid:{containerId},ci:${container.Image}'
   
   redis:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
@@ -86,8 +73,6 @@ spmAppTemplates:
     portInContainer: 6379/tcp
     matchImageName: redis
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} redis standalone jvmname:${containerName} 
     spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
@@ -104,8 +89,6 @@ spmAppTemplates:
     jmxPort: 3000
     matchImageName: solr
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} solrcloud standalone jvmname:${containerName} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
@@ -119,8 +102,6 @@ spmAppTemplates:
     jmxPort: 3000
     matchImageName: kafka
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-broker jvmname:${containerName} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
@@ -134,8 +115,6 @@ spmAppTemplates:
     jmxPort: 3000
     matchImageName: kafka
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-producer jvmname:${containerName} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
@@ -164,8 +143,6 @@ spmAppTemplates:
     jmxPort: 3000
     matchImageName: tomcat
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} tomcat standalone jvmname:${containerName} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
@@ -180,8 +157,6 @@ spmAppTemplates:
     jmxPort: 3000
     matchImageName: zookeeper
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} zk standalone jvmname:${containerName} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
@@ -196,8 +171,6 @@ spmAppTemplates:
     jmxPort: 7199 
     matchImageName: cassandra
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} cassandra standalone jvmname:${containerName} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
@@ -208,7 +181,6 @@ spmAppTemplates:
     matchImageName: /haproxy/i 
     matchContainerName: .*
     portInContainer: 1936/tcp
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} haproxy standalone
     spmRemoveTemplate: ${globalConfig.removeCommand} ${config.spmToken}
     spmConfig:
@@ -220,11 +192,8 @@ spmAppTemplates:
   mysql:
     spmToken: null
     portInContainer: 3306/tcp
-    #sslPortInContainer: 443/tcp
     matchImageName: mysql|mariadb|percona
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} mysql standalone
     spmRemoveTemplate: ${globalConfig.removeCommand} ${config.spmToken} {containerId}
     spmConfig:
@@ -232,5 +201,3 @@ spmAppTemplates:
       SPM_MONITOR_MYSQL_DB_USER: ${containerEnv.MYSQL_USER}
       SPM_MONITOR_MYSQL_DB_PASSWORD: ${containerEnv.MYSQL_PASSWORD}
       SPM_CONTAINER_NAME: ${containerName}
-
-
