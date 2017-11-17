@@ -185,9 +185,9 @@ spmAppTemplates:
     spmRemoveTemplate: ${globalConfig.removeCommand} ${config.spmToken}
     spmConfig:
       SPM_CONTAINER_NAME: ${containerName}
-      SPM_MONITOR_HAPROXY_STATS_URL: http://${host}:${port}${containerLabels.SPM_MONITOR_HAPROXY_STATS_PATH};csv
-      SPM_MONITOR_HAPROXY_USER: "${containerLabels.SPM_MONITOR_HAPROXY_USER}"
-      SPM_MONITOR_HAPROXY_PASSWORD: "${containerLabels.SPM_MONITOR_HAPROXY_PASSWORD}"
+      SPM_MONITOR_HAPROXY_STATS_URL: http://${host}:${port}${containerEnv.SPM_MONITOR_HAPROXY_STATS_PATH};csv
+      SPM_MONITOR_HAPROXY_USER: "${containerEnv.SPM_MONITOR_HAPROXY_USER}"
+      SPM_MONITOR_HAPROXY_PASSWORD: "${containerEnv.SPM_MONITOR_HAPROXY_PASSWORD}"
   
   mysql:
     spmToken: null
