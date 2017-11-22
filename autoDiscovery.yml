@@ -3,11 +3,11 @@ removeCommand: /opt/spm/bin/spm-remove-application.sh
 
 debug:
   printEvents: true
-  printContainerInfo: false
-  printContainerEnvironment: false
-  printContainerLabels: false
+  printContainerInfo: true
+  printContainerEnvironment: true
+  printContainerLabels: true
 
-spmAppTemplates:
+templates:
   nginx:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token nginx 
     spmToken: null
@@ -73,7 +73,7 @@ spmAppTemplates:
     portInContainer: 6379/tcp
     matchImageName: redis
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} redis standalone jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} redis standalone 
     spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        REDIS_HOST: ${host}
@@ -128,8 +128,6 @@ spmAppTemplates:
     jmxPort: 3000
     matchImageName: kafka
     matchContainerName: .*
-    # bridge(default) or host or network name
-    containerNetwork: bridge
     spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-consumer jvmname:${containerName} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
