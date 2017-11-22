@@ -17,7 +17,7 @@ services:
       - web2
     ports:
       - '8080:80' 
-    labels:
+    env:
       - SPM_TOKEN=${SPM_TOKEN}
       - SPM_MONITOR_HAPROXY_USER=stats
       - SPM_MONITOR_HAPROXY_PASSWORD=stats
