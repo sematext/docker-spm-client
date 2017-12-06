@@ -65,10 +65,10 @@ templates:
     spmConfig:
        SPM_MONITOR_ES_NODE_HOSTPORT: http://${host}:${port}
        SPM_CONTAINER_NAME: ${containerName}
-       SPM_MONITORING_TAGS: 'cn:${containerName},cid:{containerId},ci:${container.Image}'
+       SPM_MONITORING_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image}'
   
   redis:
-    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
+    # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token redis 
     spmToken: null
     portInContainer: 6379/tcp
     matchImageName: redis
