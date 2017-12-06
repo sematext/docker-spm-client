@@ -9,7 +9,7 @@ services:
   elasticsearch:
    image: elasticsearch:latest
    ports:
-   - "9200:9200"
+     - "9200:9200"
    environment:
      # SPM Token from http://apps.sematext.com
      - SPM_TOKEN=${SPM_TOKEN}
