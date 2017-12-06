@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Configure SPM
 export STANDALONE_LOG_DIR=/opt/spm/spm-monitor/logs/standalone/
+export SPM_LOG_TO_CONSOLE=${SPM_LOG_TO_CONSOLE:-false}
+export SPM_LOG_LEVEL=${SPM_LOG_LEVEL:-error}
 
 function get_docker_info ()
 {
