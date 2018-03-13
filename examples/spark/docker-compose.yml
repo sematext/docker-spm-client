@@ -6,7 +6,7 @@ services:
     hostname: master
     environment:
       MASTER: spark://master:7077
-      SPARK_PUBLIC_DNS: localhost
+      SPARK_PUBLIC_DNS: docker.for.mac.host.internal
       SPARK_MASTER_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.rmi.port=3001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=master
     expose:
       - 7001
@@ -29,17 +29,17 @@ services:
       - ./conf/metrics.properties:/usr/spark-2.2.1/conf/metrics.properties:ro
       - ./data:/tmp/data
 
-  worker:
+  worker1:
     image: gettyimages/spark
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
-    hostname: worker
+    hostname: worker1
     environment:
       SPARK_WORKER_CORES: 2
       SPARK_WORKER_MEMORY: 1g
       SPARK_WORKER_PORT: 8881
       SPARK_WORKER_WEBUI_PORT: 8081
       SPARK_PUBLIC_DNS: localhost
-      SPARK_WORKER_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.rmi.port=3001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=worker
+      SPARK_WORKER_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.rmi.port=3001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=worker1
     links:
       - master
     expose:
@@ -48,21 +48,50 @@ services:
       - 7014
       - 7015
       - 7016
-      - 8881
       - 3000
     ports:
       - 8081:8081
+      - 8881:8881
+    volumes:
+      - ./conf/metrics.properties:/usr/spark-2.2.1/conf/metrics.properties:ro
+      - ./data:/tmp/data
+
+  worker2:
+    image: gettyimages/spark
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
+    hostname: worker2
+    environment:
+      SPARK_WORKER_CORES: 2
+      SPARK_WORKER_MEMORY: 1g
+      SPARK_WORKER_PORT: 8882
+      SPARK_WORKER_WEBUI_PORT: 8082
+      SPARK_PUBLIC_DNS: localhost
+      SPARK_WORKER_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=3000 -Dcom.sun.management.jmxremote.rmi.port=3001 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=worker2
+    links:
+      - master
+    expose:
+      - 7012
+      - 7013
+      - 7014
+      - 7015
+      - 7016
+      - 3000
+    ports:
+      - 8082:8082
+      - 8882:8882
     volumes:
       - ./conf/metrics.properties:/usr/spark-2.2.1/conf/metrics.properties:ro
       - ./data:/tmp/data
 
   spm-client:
-   image: sematext/spm-client
-   container_name: spm-client
-   links:
-     - worker
-     - master
-   environment:
-     - SPM_CONFIG=${SPM_TOKEN} spark standalone spark-worker -P:SPARK_API_HOST=worker -P:SPARK_API_PORT=4040 -P:SPM_MONITOR_JMX_PARAMS=-Dspm.remote.jmx.url=worker:3000
-   volumes: 
+    image: sematext/spm-client
+    container_name: spm-client
+    links:
+      - master
+      - worker1
+      - worker2
+    environment:
+      - SPM_CONFIG=5accfef7-467e-429c-854e-272bf4e816ed spark standalone spark-master '-P:SPM_MONITOR_JMX_PARAMS="-Dspm.remote.jmx.url=master:3000"';5accfef7-467e-429c-854e-272bf4e816ed spark standalone spark-worker jvmname:worker1 -P:SPM_MONITOR_JMX_PARAMS=-Dspm.remote.jmx.url=worker1:3000 -P:SPM_MONITOR_TAGS="env:dev,role:test1";5accfef7-467e-429c-854e-272bf4e816ed spark standalone spark-worker jvmname:worker2 -P:SPM_MONITOR_JMX_PARAMS=-Dspm.remote.jmx.url=worker2:3000 -P:SPM_MONITOR_TAGS="env:dev,role:test2";5accfef7-467e-429c-854e-272bf4e816ed spark standalone spark-api -P:SPARK_API_HOST=master -P:SPARK_API_PORT=4040;5accfef7-467e-429c-854e-272bf4e816ed spark standalone spark-driver -P:SPM_MONITOR_JMX_PARAMS=-Dspm.remote.jmx.url=worker1:3000;5accfef7-467e-429c-854e-272bf4e816ed spark standalone spark-executor -P:SPM_MONITOR_JMX_PARAMS=-Dspm.remote.jmx.url=worker2:3000
+    volumes: 
       - "/var/run/docker.sock:/var/run/docker.sock"
+
