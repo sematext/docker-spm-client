@@ -1,11 +1,11 @@
-FROM debian:jessie
+FROM debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
-
+ENV TERM xterm
 RUN \
-  echo "deb http://http.debian.net/debian jessie-backports main" >>/etc/apt/sources.list && \
+  echo "deb http://http.debian.net/debian stretch-backports main" >>/etc/apt/sources.list && \
   apt-get -qqy update && \
-  apt install -qqy -t jessie-backports \
+  apt install -qqy -t stretch-backports \
     openjdk-8-jre-headless \
     ca-certificates-java && \
   apt-get install -qqy \
@@ -30,14 +30,14 @@ RUN \
   # wget -o - https://pub-repo.sematext.com/debian/sematext.gpg.key | apt-key add - && \
   apt-get update -qqy
 RUN \
-  curl -o ./spm-client.deb  http://pub-repo.sematext.com/onpremises/spm-client-3.0.0.noarch.deb && \
+  curl -o ./spm-client.deb  http://pub-repo.sematext.com/onpremises/spm-client-3.0.0.noarch.deb 
 RUN \
   dpkg -i ./spm-client.deb && \
-  apt-get -f install \
-  apt-get install --force-yes -qqy nodejs && \
-  apt-get autoremove && apt-get autoclean && rm ./spm-client.deb && \
-  rm -rf /var/lib/apt/lists/* && \
-  npm i spm-agent-mongodb sematext-agent-httpd sematext-agent-nginx -g
+  apt-get -f install
+RUN  apt-get install -qqy nodejs 
+RUN apt-get autoremove && apt-get autoclean && rm ./spm-client.deb 
+RUN rm -rf /var/lib/apt/lists/* 
+RUN npm i spm-agent-mongodb sematext-agent-httpd sematext-agent-nginx -g
 
 ADD ./run.sh /run.sh
 ADD ./docker-info.js /tmp/di/docker-info.js
