@@ -21,17 +21,21 @@ RUN \
     jq \
     sysvinit-core \
     sysvinit-utils \
-    build-essential && \
+    build-essential \
+    libpcap-dev && \
   apt-get remove --purge --auto-remove systemd -y && \
-  curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
+  curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - 
+RUN \
   # echo "deb http://pub-repo.sematext.com/debian sematext main" >>/etc/apt/sources.list && \
-  wget -o - https://pub-repo.sematext.com/debian/sematext.gpg.key | apt-key add - && \
-  apt-get update -qqy && \
+  # wget -o - https://pub-repo.sematext.com/debian/sematext.gpg.key | apt-key add - && \
+  apt-get update -qqy
+RUN \
   curl -o ./spm-client.deb  http://pub-repo.sematext.com/onpremises/spm-client-3.0.0.noarch.deb && \
+RUN \
   dpkg -i ./spm-client.deb && \
   apt-get -f install \
   apt-get install --force-yes -qqy nodejs && \
-  apt-get autoremove && apt-get autoclean && rm ./spm-client.deb &&\
+  apt-get autoremove && apt-get autoclean && rm ./spm-client.deb && \
   rm -rf /var/lib/apt/lists/* && \
   npm i spm-agent-mongodb sematext-agent-httpd sematext-agent-nginx -g
 
