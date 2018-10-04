@@ -134,8 +134,14 @@ set_receiver
 spm_client_setups
 export SPM_LOG_TO_CONSOLE='true'
 export SPM_LOG_LEVEL='info'
-auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.yml &
+
 
 /etc/init.d/spm-monitor restart
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon &
-tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[Error|excpetion|failed|timeout]"
+tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[Error|excpetion|failed|timeout]" & 
+
+until auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.yml; do
+    echo "Autodiscovery script crashed with exit code $?.  Respawning.." >&2
+    sleep 1
+done
+
