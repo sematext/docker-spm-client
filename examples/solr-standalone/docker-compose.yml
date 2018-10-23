@@ -2,7 +2,7 @@ version: "3"
 
 services:
   spm-client-solr:
-   image: sematext/spm-client:auto-discovery
+   image: spm-client
    container_name: spm-client-autodisco
    hostname: spm-client-autodisco
    volumes: 
