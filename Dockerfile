@@ -30,6 +30,11 @@ RUN \
   wget -O - https://pub-repo.sematext.com/debian/sematext.gpg.key | apt-key add - &&\
   apt-get update &&\
   apt-get -qqy install spm-client 
+
+# Disable infra agent
+RUN \
+  sed -e '/startInfraAgent$/ s/^#*/#/' -i /etc/init.d/spm-monitor
+
 RUN  apt-get install -qqy nodejs 
 RUN apt-get autoremove && apt-get autoclean  
 RUN rm -rf /var/lib/apt/lists/* 
