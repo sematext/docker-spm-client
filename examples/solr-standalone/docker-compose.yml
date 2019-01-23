@@ -1,13 +1,18 @@
 version: "3"
 
 services:
+  # deploy spm-client as global service
   spm-client-solr:
    image: sematext/spm-client:auto-discovery
    container_name: spm-client-autodisco
    hostname: spm-client-autodisco
    volumes: 
      - /var/run/docker.sock:/var/run/docker.sock
-
+   deploy:
+      mode: global
+      restart_policy:
+        condition: any
+# run some solr nodes, setting SPM_TOKEN as label and set JMX port to 3000
   solr1:
     image: solr
     ports:
