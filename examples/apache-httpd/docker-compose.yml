@@ -3,7 +3,7 @@ version: '2'
 services:
   spm-client:
    image: sematext/spm-client:auto-discovery
-   hostname: spm-client-nginx
+   hostname: spm-client-autodiscovery
    privileged: true
    volumes: 
     # spm-client > v1.31.65 requires access to docker socket
