@@ -1,11 +1,11 @@
-setupCommand: /opt/spm/bin/spm-client-setup-conf.sh
+setupCommand: bash /opt/spm/bin/setup-sematext
 removeCommand: /opt/spm/bin/spm-remove-application.sh
 
 debug:
-  printEvents: true
-  printContainerInfo: true
-  printContainerEnvironment: true
-  printContainerLabels: true
+  printEvents: false
+  printContainerInfo: false
+  printContainerEnvironment: false
+  printContainerLabels: false
 
 templates:
   nginx:
@@ -47,7 +47,7 @@ templates:
     # edit your image names ...
     matchImageName: java|spring|jetty
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} jvm standalone jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type jvm --agent-type standalone --region ${region}
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
@@ -60,12 +60,12 @@ templates:
     portInContainer: 9200/tcp
     matchImageName: elasticsearch
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} es standalone jvmname:${containerName} 
-    spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type elasticsearch --agent-type standalone --region ${region}
     spmConfig:
-       SPM_MONITOR_ES_NODE_HOSTPORT: http://${host}:${port}
-       SPM_CONTAINER_NAME: ${containerName}
+       SPM_MONITOR_ES_NODE_HOSTPORT: 'http://${host}:${port}'
+       SPM_CONTAINER_NAME: '${containerName}'
        SPM_MONITORING_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image}'
+    spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
   
   redis:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token redis 
@@ -73,7 +73,7 @@ templates:
     portInContainer: 6379/tcp
     matchImageName: redis
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} redis standalone 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type redis --agent-type standalone --region ${region}
     spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        REDIS_HOST: ${host}
@@ -89,7 +89,7 @@ templates:
     jmxPort: 3000
     matchImageName: solr
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} solrcloud standalone jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type solrcloud --agent-type standalone --region ${region}
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
@@ -102,7 +102,7 @@ templates:
     jmxPort: 3000
     matchImageName: kafka
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-broker jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type kafka --app-subtype kafka-broker --agent-type standalone --region ${region}
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
@@ -115,7 +115,7 @@ templates:
     jmxPort: 3000
     matchImageName: kafka
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-producer jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type kafka --app-subtype kafka-producer --agent-type standalone --region ${region} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
@@ -128,7 +128,7 @@ templates:
     jmxPort: 3000
     matchImageName: kafka
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} kafka standalone kafka-consumer jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type kafka --app-subtype kafka-consumer --agent-type standalone --region ${region}
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
@@ -141,7 +141,7 @@ templates:
     jmxPort: 3000
     matchImageName: tomcat
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} tomcat standalone jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type tomcat --agent-type standalone --region ${region}
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
@@ -155,7 +155,7 @@ templates:
     jmxPort: 3000
     matchImageName: zookeeper
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} zk standalone jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type zookeeper --agent-type standalone --region ${region} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
@@ -169,7 +169,7 @@ templates:
     jmxPort: 7199 
     matchImageName: cassandra
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} cassandra standalone jvmname:${containerName} 
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type cassandra --agent-type standalone --region ${region} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${spmToken} ${containerName}
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
@@ -179,7 +179,7 @@ templates:
     matchImageName: /haproxy/i 
     matchContainerName: .*
     portInContainer: 1936/tcp
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} haproxy standalone
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type haproxy --agent-type standalone --region ${region} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${config.spmToken}
     spmConfig:
       SPM_CONTAINER_NAME: ${containerName}
@@ -192,7 +192,7 @@ templates:
     portInContainer: 3306/tcp
     matchImageName: mysql|mariadb|percona
     matchContainerName: .*
-    spmSetupTemplate: ${globalConfig.setupCommand} ${spmToken} mysql standalone
+    spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type mysql --agent-type standalone --region ${region} 
     spmRemoveTemplate: ${globalConfig.removeCommand} ${config.spmToken} {containerId}
     spmConfig:
       SPM_MONITOR_MYSQL_DB_HOST_PORT: ${host}:${port}
