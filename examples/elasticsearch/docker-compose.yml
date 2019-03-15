@@ -2,17 +2,22 @@ version: '3'
 services:
   spm-client:
    image: sematext/spm-client:auto-discovery
+   environment:
+    - REGION=EU
    volumes: 
       # spm-client > v1.31.65 requires access to docker socket
       - /var/run/docker.sock:/var/run/docker.sock
 
   elasticsearch:
-   image: elasticsearch:latest
+   image: elasticsearch:6.6.1
    ports:
      - "9200:9200"
    environment:
+     - REGION=EU
      # SPM Token from http://apps.sematext.com
-     - SPM_TOKEN=${SPM_TOKEN}
+     # - SPM_TOKEN=${SPM_TOKEN}
+     - MONITORING_TOKEN=${MONITORING_TOKEN}
+     - INFRA_TOKEN=${INFRA_TOKEN}
    volumes:
      # set your data directory and other options ...
      - /tmp/es-data/:/usr/share/elasticsearch/data
