@@ -52,7 +52,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       SPM_CONTAINER_ID: ${containerId}
+       jvm-name: '${containerName}_${container.Image}'
 
   elasticsearch:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
@@ -64,7 +64,8 @@ templates:
     spmConfig:
        SPM_MONITOR_ES_NODE_HOSTPORT: 'http://${host}:${port}'
        SPM_CONTAINER_NAME: '${containerName}'
-       SPM_MONITORING_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
+       jvm-name: '${containerName}_${container.Image}'
     spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
   
   redis:
@@ -80,7 +81,7 @@ templates:
        REDIS_PORT: ${port}
        REDIS_PASSWORD: null
        SPM_CONTAINER_NAME: ${containerName}
-       SPM_MONITORING_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
   solrCloud: 
     spmToken: null
@@ -94,6 +95,10 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+       jvm-name: '${containerName}_${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
+
+
   
   kafka-broker: 
     spmToken: null
@@ -107,6 +112,8 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+       jvm-name: '${containerName}_${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
   
   kafka-producer: 
     spmToken: null
@@ -120,6 +127,9 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+       jvm-name: '${containerName}_${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
+
   
   kafka-consumer: 
     spmToken: null
@@ -133,6 +143,9 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+       jvm-name: '${containerName}_${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
+
   
   tomcat: 
     spmToken: null
@@ -146,6 +159,9 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+       jvm-name: '${containerName}_${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
+
 
   zookeeper: 
     spmToken: null
@@ -160,6 +176,8 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+       jvm-name: '${containerName}_${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
   cassandra: 
     spmToken: null
@@ -174,6 +192,8 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
+       jvm-name: '${containerName}_${container.Image}'
+       SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
   haproxy: 
     matchImageName: /haproxy/i 
