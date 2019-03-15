@@ -120,7 +120,8 @@ function set_receiver () {
 	if [ -n "$REGION" ]; then
 		# generate region receiver settings for Java based agents
 		#                                                 $REGION converted to lowercase
-		bash /opt/spm/bin/spm-client-setup-env.sh region:${REGION,,}
+		# bash /opt/spm/bin/spm-client-setup-env.sh region:${REGION,,}
+		/opt/spm/bin/setup-env --region ${REGION,,}
 		# generate region receiver settings for nodejs based agents
 		#                        $REGION converted to upper case
 		sematext-nginx-setup -r ${REGION^^}
@@ -137,8 +138,11 @@ export SPM_LOG_LEVEL='info'
 
 
 /etc/init.d/spm-monitor restart
+export $(grep -v '^#' /opt/spm/properties/agent.properties | xargs)
+/opt/spm/spm-monitor/bin/st-agent --server-base-url $server_base_url  --events.receiver-url $events_receiver_url --logs.receiver-url $logs_receiver_url &
+
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon &
-tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[Error|excpetion|failed|timeout]" & 
+tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[starting|Error|exception|failed|timeout|warning]" & 
 
 until auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.yml; do
     echo "Autodiscovery script crashed with exit code $?.  Respawning.." >&2
