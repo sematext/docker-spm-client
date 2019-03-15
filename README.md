@@ -12,47 +12,132 @@ ELB, EBS, RDS, JVM / Java and Scala Applications, ...
 Please note: to monitor Docker, CoreOS, RancherOS, etc. themselves use [sematext/sematext-agent-docker](https://github.com/sematext/sematext-agent-docker)
 
 Also, monitoring of Node.js for Express, Hapi.js, Koa Apps, etc. is not included in this image - use [sematext/spm-agent-nodejs](https://github.com/sematext/spm-agent-nodejs) for that.
-...
 
-# Installation 
+## Swarm Installation 
 
-```.sh
-# multiple Apps can be configured using ";" as separator
-# SPM_CONFIG="YOUR_SPM_CONFIG_STRINGS"
-# Elasticsearch Example
-export SPM_CONFIG="YOUR_SPM_TOKEN es javaagent jvmname:ES1"
-docker run --name spm-client --restart=always -v /var/run/docker.sock:/var/run/docker.sock -e $SPM_CONFIG sematext/spm-client
+__Step 1__
+
+Install SPM-Client to all cluster nodes by deploying SPM-Client as global Swarm service:
+
+```
+docker service create --mode global --name spm-client \
+--mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+sematext/spm-client:auto-discovery
+```
+
+### Optional environment variables: 
+
+__Sematext Cloud__ 
+
+- REGION - US or EU will set Sematext Cloud API endpoints for the given region
+
+__Sematext Enterprise__ 
+
+- METRICS_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- TRACE_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- EVENT_RECEIVER_URL - The events receiver URL for Sematext Enterprise
+- LOG_TOKEN_RECEIVER_URL - The Logsene receiver URL for Sematext Enterprise
+
+
+*Note: Skip Step 1, if you have already deployed SPM-Client on your cluster.*
+
+__Step 2__
+
+Tag your application container with the SPM_TOKEN by using an environment variable or Docker label. Docker Compose example for MongoDB:  
+
+```
+docker run -e MONITORING_TOKEN=YOUR_SPM_TOKEN_FOR_ELASTICSEARCH -e INFRA_TOKEN=YOUR_INFRA_TOKEN elasticsearch
+```
+
+## Kubernetes Installation
+
+__Step 1__
+
+Deploy SPM-Client as Daemonset to every Kubernetes node:
 
 ```
 
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: sematext-spm-client
+spec:
+  template:
+    metadata:
+      labels:
+        app: sematext-spm-client
+    spec:
+      nodeSelector: {}
+      hostNetwork: true
+      hostPID: true
+      dnsPolicy: "ClusterFirst"
+      restartPolicy: "Always"
+      containers:
+        - name:  semtext-spm-client
+          image: sematext/spm-client:auto-discovery
+          imagePullPolicy: "Always"
+          env:
+            - name: REGION
+              value: US  # please set this value to "EU" for Sematext Cloud Europe
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-sock
+            - mountPath: /etc/localtime
+              name: localtime
+            - mountPath: /rootfs
+              name: rootfs
+              readOnly: true
+          securityContext:
+            privileged: true
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+        - name: rootfs
+          hostPath:
+            path: /
 
-To change the metrics and tracing receiver URLs for Sematext Enterprise use following environment variables:
 ```
-METRICS_RECEIVER=http://SEMATEXT-SERVER-IP:8449/spm-receiver
-TRACING_RECEIVER=http://SEMATEXT-SERVER-IP:8089/spm-tracing-receiver/v2
+
+### Optional environment variables: 
+
+__Sematext Cloud__ 
+
+- REGION - US or EU will set Sematext Cloud API endpoints for the given region
+
+__Sematext Enterprise__ 
+
+- METRICS_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- TRACE_RECEIVER_URL - The metrics receiver URL for Sematext Enterprise
+- EVENT_RECEIVER_URL - The events receiver URL for Sematext Enterprise
+- LOG_TOKEN_RECEIVER_URL - The Logsene receiver URL for Sematext Enterprise
+
+
+__Step 2__
+
+Tag your application container with the MONITORING_TOKEN by using an environment variable or Docker label. Example POD for MongoDB: 
+
 ```
 
-
-# Examples
-- [How to use SPM Client Container with Elasticsearch](http://blog.sematext.com/2015/10/28/docker-elasticsearch-how-to-monitor-the-official-elasticsearch-image-on-docker/)
-- [How use SPM Client Container with Solr](http://blog.sematext.com/2015/12/09/docker-solr-monitoring/)
-- [Monitoring Kafka on Docker Cloud](https://sematext.com/blog/2016/04/19/monitoring-kafka-on-docker-cloud/)
-- [Gist: Docker Compose Examples for Tomcat in-process and standalone monitoring](https://gist.github.com/megastef/ada049814fdb69ddca5eff296555b99c)
-- [More examples](https://github.com/sematext/docker-spm-client/tree/master/examples)
-
-
-Parameters:
-- SPM_CONFIG - Multiple App configurations for spm-client-setup-conf.sh separated by ";". 
-- SPM_CONFIG_IFS - A custom config separator in cases where ";" is used as part of a config (like HaProxy stats url)
-
-Any Linux command can be executed to modify the configuration using "docker exec -it spm-client your_linux_command" :
+apiVersion: v1
+kind: Pod
+metadata:
+  name: some-mongo
+spec:
+  containers:
+    - image: launcher.gcr.io/google/mongodb3
+      name: mongo
+      ports:
+        - containerPort: 27017
+      env:
+        - name: MONITORING_TOKEN
+          value: YOUR_SPM_TOKEN_FOR_MONGODB
 
 ```
-# An alternative way to configure Elasticsearch to set  e.g. jvmname 'ES1'
-docker exec -it spm-client /bin/bash /opt/spm/bin/spm-setup-conf.sh YOUR_SPM_TOKEN es javaagent jvmname:ES1
-# persist config changes
-docker commit spm-client
-```
+
 
 # Support
 - Follow us on Twitter @sematext
