@@ -139,7 +139,7 @@ export SPM_LOG_LEVEL='info'
 
 /etc/init.d/spm-monitor restart
 export $(grep -v '^#' /opt/spm/properties/agent.properties | xargs)
-/opt/spm/spm-monitor/bin/st-agent --server-base-url $server_base_url  --events.receiver-url $events_receiver_url --logs.receiver-url $logs_receiver_url &
+/opt/spm/spm-monitor/bin/st-agent --server-base-url $server_base_url  --events.receiver-url $events_receiver_url --logs.receiver-url $logs_receiver_url --logging.level error
 
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon &
 tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[starting|Error|exception|failed|timeout|warning]" & 
