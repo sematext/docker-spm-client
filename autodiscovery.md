@@ -32,7 +32,7 @@ __Step 2__
 Tag your application container with the SPM_TOKEN by using an environment variable or Docker label. Docker Compose example for MongoDB:  
 
 ```
-docker run -e SPM_TOKEN=YOUR_SPM_TOKEN_FOR_MONGODB mongo
+docker run -e MONITORING_TOKEN=YOUR_SPM_TOKEN_FOR_ELASTICSEARCH -e INFRA_TOKEN=YOUR_INFRA_TOKEN elasticsearch
 ```
 
 ## Kubernetes Installation
@@ -104,7 +104,7 @@ __Sematext Enterprise__
 
 __Step 2__
 
-Tag your application container with the SPM_TOKEN by using an environment variable or Docker label. Example POD for MongoDB: 
+Tag your application container with the MONITORING_TOKEN by using an environment variable or Docker label. Example POD for MongoDB: 
 
 ```
 
@@ -119,7 +119,7 @@ spec:
       ports:
         - containerPort: 27017
       env:
-        - name: SPM_TOKEN
+        - name: MONITORING_TOKEN
           value: YOUR_SPM_TOKEN_FOR_MONGODB
 
 ```
