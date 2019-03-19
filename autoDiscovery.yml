@@ -63,11 +63,14 @@ templates:
     spmSetupTemplate: ${globalConfig.setupCommand} --infra-token ${infraToken} --monitoring-token ${spmToken} --app-type elasticsearch --agent-type standalone --region ${region}
     spmConfig:
        SPM_MONITOR_ES_NODE_HOSTPORT: 'http://${host}:${port}'
+       #SPM_MONITOR_ES_NODE_HOSTPORT: 'https://${host}:${port}'
        SPM_CONTAINER_NAME: '${containerName}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
        jvm-name: '${containerName}_${container.Image}'
+       #SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME: admin
+       #SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD: admin
     spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
-  
+
   redis:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token redis 
     spmToken: null
