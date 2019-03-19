@@ -6,7 +6,7 @@ RUN \
   echo "deb http://http.debian.net/debian stretch-backports main" >>/etc/apt/sources.list && \
   apt-get -qqy update && \
   apt install -qqy -t stretch-backports \
-    openjdk-8-jre-headless \
+    openjdk-11-jre-headless \
     ca-certificates-java && \
   apt-get install -qqy \
     apt-utils \
