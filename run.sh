@@ -139,11 +139,14 @@ export SPM_LOG_LEVEL='info'
 
 /etc/init.d/spm-monitor restart
 export $(grep -v '^#' /opt/spm/properties/agent.properties | xargs)
-/opt/spm/spm-monitor/bin/st-agent --server-base-url $server_base_url  --events.receiver-url $events_receiver_url --logs.receiver-url $logs_receiver_url --logging.level error
+sudo /opt/spm/spm-monitor/bin/st-agent --server-base-url $server_base_url  --events.receiver-url $events_receiver_url --logs.receiver-url $logs_receiver_url --logging.level=error  --logging.write-events="false"  --logging.request-tracking="false" & 
 
 # /bin/bash /opt/spm/spm-monitor/bin/spm-monitor-starter.sh /opt/spm/spm-monitor/conf/spm-monitor-os-config.properties —daemon &
-tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[starting|Error|exception|failed|timeout|warning]" & 
+tail -F /opt/spm/spm-monitor/logs/*/*config*.log | grep -ie "[starting|Error|exception|Exception|failed|timeout|warning]" & 
+# tail -F /opt/spm/spm-monitor/logs/applications/*/default/spm-monitor-*.log | grep -ie "[starting|Error|exception|Exception|failed|timeout|warning]" & 
 
+#| grep -ie "[starting|Error|exception|Exception|failed|timeout|warning]" & 
+echo "Starting auto-discovery process"
 until auto-discovery --config /usr/lib/node_modules/docker-spm-client/autoDiscovery.yml; do
     echo "Autodiscovery script crashed with exit code $?.  Respawning.." >&2
     sleep 1
