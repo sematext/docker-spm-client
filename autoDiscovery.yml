@@ -52,7 +52,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
 
   elasticsearch:
     # please set SPM token via APP container ENV variable e.g. docker run -e SPM_TOKEN=token elasticsearch 
@@ -66,7 +66,7 @@ templates:
        #SPM_MONITOR_ES_NODE_HOSTPORT: 'https://${host}:${port}'
        SPM_CONTAINER_NAME: '${containerName}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
        #SPM_MONITOR_ES_NODE_BASICAUTH_USERNAME: admin
        #SPM_MONITOR_ES_NODE_BASICAUTH_PASSWORD: admin
     spmRemoveTemplate: bash ${globalConfig.removeCommand} ${spmToken} ${containerName}
@@ -98,7 +98,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
 
@@ -115,7 +115,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
   
   kafka-producer: 
@@ -130,7 +130,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
   
@@ -146,7 +146,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
   
@@ -162,7 +162,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
 
@@ -179,7 +179,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
   cassandra: 
@@ -195,7 +195,7 @@ templates:
     spmConfig:
        SPM_MONITOR_JMX_PARAMS: -Dspm.remote.jmx.url=${host}:${config.jmxPort}
        SPM_CONTAINER_NAME: ${containerName}
-       jvm-name: '${containerName}_${container.Image}'
+       jvm-name: '${containerId}'
        SPM_MONITOR_TAGS: 'cn:${containerName},cid:${containerId},ci:${container.Image},node-name:process.env.SPM_REPORTED_HOSTNAME'
 
   haproxy: 
