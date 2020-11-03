@@ -8,11 +8,11 @@ Use this for [Docker Metrics and Logs Monitoring](https://sematext.com/docker/) 
 
 ## Kubernetes Performance Metrics & Log Monitoring
 
-Use this for [Kubernetes Metrics and Logs Monitoring](https://sematext.com/kubernetes/) with Sematext.  [Install it](https://sematext.com/docs/integration/kubernetes/) as Operator, as Helm chart, etc. See [how to run it](https://sematext.com/docs/agents/sematext-agent/kubernetes/installation/) and [configure it](https://sematext.com/docs/agents/sematext-agent/kubernetes/configuration/) and [use variables](https://sematext.com/docs/integration/kubernetes/#sematext-agent) to change its behavior.  See [Kubernetes metrics](https://sematext.com/docs/integration/kubernetes/#kubernetes-metrics) it collects.
+Use this for [Kubernetes Metrics and Logs Monitoring](https://sematext.com/kubernetes/) with Sematext.  [Install it](https://sematext.com/docs/integration/kubernetes/) as Operator, as Helm chart, etc. See [how to run it](https://sematext.com/docs/agents/sematext-agent/kubernetes/installation/), [configure it](https://sematext.com/docs/agents/sematext-agent/kubernetes/configuration/) and [use variables](https://sematext.com/docs/integration/kubernetes/#sematext-agent) to change its behavior.  See [Kubernetes metrics](https://sematext.com/docs/integration/kubernetes/#kubernetes-metrics) it collects.
 
 
 - [Containerd supported](https://sematext.com/product-updates/#/2020/containerd-meets-sematext)
-- [CRI-O supporedt](https://sematext.com/product-updates/#/2020/updated-support-for-kubernetes-logs)
+- [CRI-O supported](https://sematext.com/product-updates/#/2020/updated-support-for-kubernetes-logs)
 - [ARM64 supported](https://sematext.com/product-updates/#/2020/say-hello-to-monitoring-arm64-with-sematext)
 - Out of the box [Kubernetes Audit Dashboards](https://sematext.com/product-updates/#/2020/we-have-a-new-integration-for-kubernetes-audit-logs) - see [docs](https://sematext.com/docs/integration/kubernetes-audit-integration/)
 - Out of the box [Container Images Inventory](https://sematext.com/product-updates/#/2020/inventory-addition-container-images-report)
